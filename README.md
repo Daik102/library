@@ -1,1 +1,1 @@
-# library
+This is the library project for the Odin Project.
