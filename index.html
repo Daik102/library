@@ -7,7 +7,109 @@
   <link rel="stylesheet" href="library.css">
 </head>
 <body>
-  
+  <div class="container">
+    <header class="header">
+      <ul>
+        <li><img class="icons" src="./icons/magnify.svg" alt="search-button"></li>
+        <li><div><input type="text"></div></li>
+        <li><img class="icons" src="./icons/bell-ring-outline.svg" alt="notification-button"></li>
+        <li><img class="sub-photo" src="./photos/graycat.jpg" alt="gray-cat"></li>
+        <li><a href="https://github.com/Daik102/library" target="_blank"><span>Daik</span></a></li>
+      </ul>
+      <ul>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 2L14 6.5V17.5L19 13V2M6.5 5C4.55 5 2.45 5.4 1 6.5V21.16C1 21.41 1.25 21.66 1.5 21.66C1.6 21.66 1.65 21.59 1.75 21.59C3.1 20.94 5.05 20.5 6.5 20.5C8.45 20.5 10.55 20.9 12 22C13.35 21.15 15.8 20.5 17.5 20.5C19.15 20.5 20.85 20.81 22.25 21.56C22.35 21.61 22.4 21.59 22.5 21.59C22.75 21.59 23 21.34 23 21.09V6.5C22.4 6.05 21.75 5.75 21 5.5V19C19.9 18.65 18.7 18.5 17.5 18.5C15.8 18.5 13.35 19.15 12 20V6.5C10.55 5.4 8.45 5 6.5 5Z" /></svg>
+        <li><p>Odin Library</p></li>
+        <li><button class="new-btn">New Book</button></li>
+      </ul>
+    </header>
+    <div>
+      
+    </div>
+    <dialog class="dialog">
+      <form>
+        <h2>Enter the book information</h2>
+        <p>
+          <label for="title">Title: </label>
+          <input type="text" id="title">
+        </p>
+        <p>
+          <label for="author">Author: </label>
+          <input type="text" id="author">
+        </p>
+        <p>
+          <label for="pages">Pages: </label>
+          <input type="number" min="1" id="pages">
+        </p>
+        <p>
+          <label for="have-read">Have read: </label>
+          <select name="have-read" id="have-read">
+            <option value="not-read-yet">Not read yet</option>
+            <option value="already-read">Already read</option>
+          </select>
+        </p>
+        <p class="btn-container">
+          <button type="reset" class="cancel-btn">Cancel</button>
+          <button type="reset" class="add-btn">Add</button>
+        </p>
+      </form>
+    </dialog>
+    <main class="main">
+      <section class="projects">
+        <h3>My Library</h3>
+        <ul class="bookshelf"></ul>
+      </section>
+      <section class="announcements">
+        <h3>Announcements</h3>
+        <ul>
+          <li>
+            <h5>Site Maintenance</h5>
+            <p>Some contents might be added in the future after finishing another works on the Odin Project.</p>
+          </li>
+          <li>
+            <h5>Motorcycle Day</h5>
+            <p>In Japan, August 19 is recognized as Motorcycle day. Let's ride on this day to celebrate!</p>
+          </li>
+          <li>
+            <h5>Site Policy</h5>
+            <p>I've been learning to code on the Odin Project to become a web developer. Feel free to walk through my site.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="trending">
+        <h3>Trending</h3>
+        <ul>
+          <li>
+            <img src="./photos/australian-shepherd.jpg" alt="female-dog">
+            <div>
+              <h6>@love_swimming</h6>
+              <p>Sally</p>
+            </div>
+          </li>
+          <li>
+            <img class="orca" src="./photos/orca.jpg" alt="orca">
+            <div>
+              <h6>@s901</h6>
+              <p>Moon</p>
+            </div>
+          </li>
+          <li>
+            <img src="./photos/white-dog-mini.jpg" alt="white-dog">
+            <div>
+              <h6>@snow_mountain</h6>
+              <p>Sierra</p>
+            </div>
+          </li>
+          <li>
+            <img src="./photos/hedgehog.avif" alt="hedgehog">
+            <div>
+              <h6>@mr_hog</h6>
+              <p>Bob</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
   <script src="library.js"></script>
 </body>
 </html>
