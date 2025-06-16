@@ -1,13 +1,13 @@
 const myLibrary = [];
 
-function Book(title, author, pages, haveRead) {
+function Book(title, author, pages, rating) {
   this.id = crypto.randomUUID();
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.haveRead = haveRead;
+  this.rating = rating;
   this.info = function() {
-    return `${title} by ${author}, ${pages} pages, ${haveRead}`;
+    return `${title} by ${author}, ${pages} pages, ${rating}`;
   }
 }
 
@@ -35,16 +35,32 @@ function renderLibrary() {
   const title = document.createElement('h4');
   const author = document.createElement('p');
   const pages = document.createElement('p');
-  const haveRead = document.createElement('p');
+  const btnContainer = document.createElement('p');
+  const ratingBtn = document.createElement('button');
+  const deleteBtn = document.createElement('button');
   title.textContent = book.title;
   author.textContent = book.author;
   pages.textContent = book.pages + ' pages';
-  haveRead.textContent = book.haveRead;
+  btnContainer.classList = 'btn-container';
+  ratingBtn.classList = 'rating-btn';
+  ratingBtn.textContent = book.rating;
+  deleteBtn.classList = 'delete-btn';
+  deleteBtn.innerHTML = '&#10005;';
   item.appendChild(title);
   item.appendChild(author);
   item.appendChild(pages);
-  item.appendChild(haveRead);
+  btnContainer.appendChild(ratingBtn);
+  btnContainer.appendChild(deleteBtn);
+  item.appendChild(btnContainer);
   bookshelf.appendChild(item);
+
+  ratingBtn.addEventListener('click', () => {
+    
+  });
+
+  deleteBtn.addEventListener('click', (e) => {
+    bookshelf.removeChild(e.target.parentNode.parentNode);
+  });
 });
 }
 
@@ -55,7 +71,7 @@ const addBtn = document.querySelector('.add-btn');
 const inputTitle = document.getElementById('title');
 const inputAuthor = document.getElementById('author');
 const inputPages = document.getElementById('pages');
-const selectHaveRead = document.getElementById('have-read');
+const selectRating = document.getElementById('rating');
 
 newBtn.addEventListener('click', (e) => {
   dialog.showModal();
@@ -66,7 +82,7 @@ newBtn.addEventListener('click', (e) => {
   });
 });
 
-cancelBtn.addEventListener('click', (e) => {
+cancelBtn.addEventListener('click', () => {
   dialog.close();
 });
 
@@ -74,9 +90,9 @@ addBtn.addEventListener('click', () => {
   let title = inputTitle.value;
   let author = inputAuthor.value;
   let pages = inputPages.value;
-  let haveRead = selectHaveRead.value;
+  let rating = selectRating.value;
 
-  const newBook = new Book(title, author, pages, haveRead);
+  const newBook = new Book(title, author, pages, rating);
   addBookToLibrary(newBook);
   renderLibrary();
   dialog.close();

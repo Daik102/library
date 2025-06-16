@@ -21,14 +21,19 @@
   --sub-theme: rgb(87, 129, 132);
   --item-theme: rgb(212, 233, 237);
   --button-theme: rgb(255, 55, 55);
-  --button-hover-theme: rgb(255, 105, 105);
-  --button-hover-theme-2: rgb(87, 162, 165);
+  --button-hover-theme-red: rgb(255, 105, 105);
+  --button-hover-theme-green: rgb(87, 162, 165);
+  --button-hover-theme-purple: rebeccapurple;
   --accent-theme: rgb(46, 78, 87);
   --hover-theme: rgb(242, 252, 255);
   --accent-hover-theme: rgb(255, 55, 55) 0.8rem;
   --paragraph-theme: #444;
   --white-theme: rgb(242, 252, 255);
   --modal-theme: rgba(35, 64, 68, 0.6);
+}
+
+body {
+  background-color: var(--sub-theme);
 }
 
 a {
@@ -150,7 +155,7 @@ ul {
 }
 
 .header button:hover {
-  background-color: var(--button-hover-theme);
+  background-color: var(--button-hover-theme-red);
 }
 
 .dialog-container {
@@ -200,7 +205,7 @@ dialog option {
   padding: 0.4rem 1.2rem;
 }
 
-.btn-container {
+dialog .btn-container {
   margin-top: 4rem;
 }
 
@@ -221,7 +226,7 @@ dialog button {
 }
 
 .cancel-btn:hover {
-  background-color: var(--button-hover-theme-2);
+  background-color: var(--button-hover-theme-green);
 }
 
 .add-btn {
@@ -229,7 +234,7 @@ dialog button {
 }
 
 .add-btn:hover {
-  background-color: var(--button-hover-theme);
+  background-color: var(--button-hover-theme-red);
 }
 
 .main {
@@ -259,17 +264,12 @@ dialog button {
 }
 
 .projects li {
-  background-image: linear-gradient(90deg, var(--accent-theme) 0.8rem, var(--item-theme) 0);
-  padding: 2rem 2.8rem;
+  background-image: linear-gradient(90deg, var(--accent-theme) 0.8rem, var(--white-theme) 0);
+  padding: 2rem 1.6rem 2rem 2.4rem;
   width: 46rem;
   height: 20rem;
   border-radius: 0.8rem;
   box-shadow: 0.8rem 0.8rem 0.8rem 0 rgba(5, 5, 11, 0.2);
-  cursor: pointer;
-}
-
-.projects li:hover {
-  background-image: linear-gradient(90deg, var(--accent-hover-theme), var(--hover-theme) 0);
 }
 
 .projects li:last-child {
@@ -291,16 +291,30 @@ dialog button {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-.projects span {
-  font-size: 1.8rem;
-  font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-style: italic;
+.projects .btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.8rem;
 }
 
-.projects img {
-  width: 100%;
-  height: auto;
-  filter: invert(7%) sepia(48%) saturate(2463%) hue-rotate(224deg) brightness(96%) contrast(85%);
+.rating-btn {
+  font-size: 2.2rem;
+  background-color: #0000;
+  color: var(--button-hover-theme-green);
+  border: none;
+  cursor: pointer;
+}
+
+.rating-btn:hover {
+  color: var(--button-hover-theme-red);
+}
+
+.delete-btn {
+  padding:0.2rem 0.6rem;
+  font-size: 2.2rem;
+  background-color: #0000;
+  border: none;
+  cursor: pointer;
 }
 
 .announcements ul {
