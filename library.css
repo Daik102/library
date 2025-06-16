@@ -158,22 +158,21 @@ ul {
   background-color: var(--button-hover-theme-red);
 }
 
-.dialog-container {
-  background-color: blue;
-  width: 1000px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 dialog {
   margin: auto;
   width: 64rem;
-  height: 40rem;
   padding: 2.4rem 2.4rem 2rem;
   background-color: var(--item-theme);
   border: none;
   border-radius: 0.8rem;
+}
+
+.dialog-add {
+  height: 40rem;
+}
+
+.dialog-rating {
+  height: 28rem;
 }
 
 ::backdrop {
@@ -200,13 +199,17 @@ dialog label {
 dialog input,
 dialog select,
 dialog option {
-  width: 40rem;
+  width: 44rem;
   font-size: 2rem;
   padding: 0.4rem 1.2rem;
 }
 
-dialog .btn-container {
+.dialog-add .btn-container {
   margin-top: 4rem;
+}
+
+.dialog-rating .btn-container {
+  margin-top: 7.2rem;
 }
 
 dialog button {
@@ -229,11 +232,11 @@ dialog button {
   background-color: var(--button-hover-theme-green);
 }
 
-.add-btn {
+.add-btn, .confirm-btn {
   background-color: var(--button-theme);
 }
 
-.add-btn:hover {
+.add-btn:hover, .confirm-btn:hover {
   background-color: var(--button-hover-theme-red);
 }
 

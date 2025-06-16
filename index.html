@@ -25,7 +25,7 @@
     <div>
       
     </div>
-    <dialog class="dialog">
+    <dialog class="dialog-add">
       <form>
         <h2>Enter the book information</h2>
         <p>
@@ -41,13 +41,13 @@
           <input type="number" min="1" id="pages">
         </p>
         <p>
-          <label for="rating">rating: </label>
-          <select name="rating" id="rating">
+          <label for="rating-new-book">Rating: </label>
+          <select name="rating" id="rating-new-book">
             <option value="not-read-yet">Not read yet</option>
-            <option value="five-star">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
-            <option value="four-star">&#9734;&#9734;&#9734;&#9734;</option>
-            <option value="three-star">&#9734;&#9734;&#9734;</option>
-            <option value="two-star">&#9734;&#9734;</option>
+            <option value="five-stars">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
+            <option value="four-stars">&#9734;&#9734;&#9734;&#9734;</option>
+            <option value="three-stars">&#9734;&#9734;&#9734;</option>
+            <option value="two-stars">&#9734;&#9734;</option>
             <option value="one-star">&#9734;</option>
           </select>
         </p>
@@ -62,6 +62,26 @@
         <h3>My Library</h3>
         <ul class="bookshelf"></ul>
       </section>
+      <dialog class="dialog-rating">
+        <form>
+          <h2>What's your rating?</h2>
+          <p>
+            <label for="rating-old-book">Rating: </label>
+            <select name="rating" id="rating-old-book">
+              <option value="not-read-yet">Not read yet</option>
+              <option value="five-stars">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
+              <option value="four-stars">&#9734;&#9734;&#9734;&#9734;</option>
+              <option value="three-stars">&#9734;&#9734;&#9734;</option>
+              <option value="two-stars">&#9734;&#9734;</option>
+              <option value="one-star">&#9734;</option>
+            </select>
+          </p>
+          <p class="btn-container">
+            <button type="reset" class="cancel-btn">Cancel</button>
+            <button type="reset" class="confirm-btn">Confirm</button>
+          </p>
+        </form>
+      </dialog>
       <section class="announcements">
         <h3>Announcements</h3>
         <ul>
