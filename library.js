@@ -32,28 +32,71 @@ const cancelBtn = document.querySelectorAll('.cancel-btn');
 const addBtn = document.querySelector('.add-btn');
 const confirmBtn = document.querySelector('.confirm-btn');
 const deleteBtn = document.querySelector('.delete-btn');
-const inputTitle = document.getElementById('title');
-const inputAuthor = document.getElementById('author');
-const inputPages = document.getElementById('pages');
 const ratingNewBook = document.getElementById('rating-new-book');
 const dialogRating = document.querySelector('.dialog-rating');
 const ratingOldBook = document.getElementById('rating-old-book');
 const dialogDelete = document.querySelector('.dialog-delete');
+const dialogEdit = document.querySelector('.dialog-edit');
+const editBtn = document.querySelector('.edit-btn');
 const dialog = document.querySelectorAll('dialog');
+const blankAlertTitle = document.querySelector('.blank-alert-title');
+const blankAlertAuthor = document.querySelector('.blank-alert-author');
+const blankAlertPages = document.querySelector('.blank-alert-pages');
+let inputTitle = document.getElementById('title');
+let inputAuthor = document.getElementById('author');
+let inputPages = document.getElementById('pages');
+let editTitle = document.getElementById('edit-title');
+let editAuthor = document.getElementById('edit-author');
+let editPages = document.getElementById('edit-pages');
+let ratingBtn;
+let crossBtn;
+let title;
 let itemId;
 let listItem;
 
-Book.prototype.renderLibrary = function() {
+Book.prototype.editRating = function() {
+  ratingBtn.addEventListener('click', (e) => {
+    itemId = e.target.parentNode.parentNode.dataset.id;
+    myLibrary.forEach((book) => {
+      if (book.id === itemId) {
+      if (book.rating === 'five-stars') {
+          ratingOldBook.options[1].selected = true;
+        } else if (book.rating === 'four-stars') {
+          ratingOldBook.options[2].selected = true;
+        } else if (book.rating === 'three-stars') {
+          ratingOldBook.options[3].selected = true;
+        } else if (book.rating === 'two-stars') {
+          ratingOldBook.options[4].selected = true;
+        } else if (book.rating === 'one-stars') {
+          ratingOldBook.options[5].selected = true;
+        } else {
+          ratingOldBook.options[0].selected = true;
+        }
+      }
+    });
+    dialogRating.showModal();
+  });
+}
+
+Book.prototype.deleteItem = function() {
+  crossBtn.addEventListener('click', (e) => {
+    itemId = e.target.parentNode.parentNode.dataset.id;
+    listItem = e.target.parentNode.parentNode;
+    dialogDelete.showModal();
+  });
+}
+
+function renderLibrary() {
   bookshelf.innerHTML = '';
   
   myLibrary.forEach((book) => {
     const item = document.createElement('li');
-    const title = document.createElement('h4');
+    title = document.createElement('h4');
     const author = document.createElement('p');
     const pages = document.createElement('p');
     const btnContainer = document.createElement('p');
-    const ratingBtn = document.createElement('button');
-    const crossBtn = document.createElement('button');
+    ratingBtn = document.createElement('button');
+    crossBtn = document.createElement('button');
     
     item.setAttribute('data-id', `${book.id}`);
     title.textContent = book.title;
@@ -61,6 +104,7 @@ Book.prototype.renderLibrary = function() {
     pages.textContent = book.pages + ' pages';
     btnContainer.classList = 'btn-container';
     ratingBtn.classList = 'rating-btn';
+    
     if (book.rating === 'not-read-yet') {
       ratingBtn.classList.add('not-read-yet');
     }
@@ -90,35 +134,24 @@ Book.prototype.renderLibrary = function() {
     item.appendChild(btnContainer);
     bookshelf.appendChild(item);
 
-    ratingBtn.addEventListener('click', (e) => {
-      itemId = e.target.parentNode.parentNode.dataset.id;
+    title.addEventListener('click', (e) => {
+      itemId = e.target.parentNode.dataset.id;
       
       if (book.id === itemId) {
-        if (book.rating === 'five-stars') {
-          ratingOldBook.options[1].selected = true;
-        } else if (book.rating === 'four-stars') {
-          ratingOldBook.options[2].selected = true;
-        } else if (book.rating === 'three-stars') {
-          ratingOldBook.options[3].selected = true;
-        } else if (book.rating === 'two-stars') {
-          ratingOldBook.options[4].selected = true;
-        } else if (book.rating === 'one-stars') {
-          ratingOldBook.options[5].selected = true;
-        } else {
-          ratingOldBook.options[0].selected = true;
-        }
+        editTitle.value = book.title;
+        editAuthor.value = book.author;
+        editPages.value = book.pages;
       }
 
-      dialogRating.showModal();
+      dialogEdit.showModal();
     });
-
-    crossBtn.addEventListener('click', (e) => {
-      itemId = e.target.parentNode.parentNode.dataset.id;
-      listItem = e.target.parentNode.parentNode;
-      dialogDelete.showModal();
-    });
+    
+    doAndroidsDreamOfElectricSheep.editRating();
+    doAndroidsDreamOfElectricSheep.deleteItem();
   });
 }
+
+renderLibrary();
 
 newBtn.addEventListener('click', () => {
   inputTitle.value = '';
@@ -132,6 +165,17 @@ newBtn.addEventListener('click', () => {
 cancelBtn.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
+
+    if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
+    blankAlertTitle.classList.remove('on-alert');
+  }
+  if (blankAlertAuthor.className === 'blank-alert blank-alert-author on-alert') {
+    blankAlertAuthor.classList.remove('on-alert');
+  }
+  if (blankAlertPages.className === 'blank-alert blank-alert-pages on-alert') {
+    blankAlertPages.classList.remove('on-alert');
+  }
+
     dialog.forEach((modal) => {
       modal.close();
     });
@@ -145,10 +189,40 @@ addBtn.addEventListener('click', (e) => {
   const pages = inputPages.value;
   const rating = ratingNewBook.value;
 
+  if (title === '') {
+    blankAlertTitle.classList.add('on-alert');
+    return;
+  } else if (author === '') {
+    if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
+      blankAlertTitle.classList.remove('on-alert');
+    }
+    blankAlertAuthor.classList.add('on-alert');
+    return;
+  } else if (pages === '') {
+    if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
+      blankAlertTitle.classList.remove('on-alert');
+    }
+    if (blankAlertAuthor.className === 'blank-alert blank-alert-author on-alert') {
+      blankAlertAuthor.classList.remove('on-alert');
+    }
+    blankAlertPages.classList.add('on-alert');
+    return;
+  }
+
+  if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
+    blankAlertTitle.classList.remove('on-alert');
+  }
+  if (blankAlertAuthor.className === 'blank-alert blank-alert-author on-alert') {
+    blankAlertAuthor.classList.remove('on-alert');
+  }
+  if (blankAlertPages.className === 'blank-alert blank-alert-pages on-alert') {
+    blankAlertPages.classList.remove('on-alert');
+  }
+
   const newBook = new Book(title, author, pages, rating);
   addBookToLibrary(newBook);
-  doAndroidsDreamOfElectricSheep.renderLibrary();
   dialogAdd.close();
+  renderLibrary();
 });
 
 confirmBtn.addEventListener('click', (e) => {
@@ -160,8 +234,8 @@ confirmBtn.addEventListener('click', (e) => {
       book.rating = rating;
     }
   });
-  doAndroidsDreamOfElectricSheep.renderLibrary();
   dialogRating.close();
+  renderLibrary();
 });
 
 deleteBtn.addEventListener('click', (event) => {
@@ -172,10 +246,21 @@ deleteBtn.addEventListener('click', (event) => {
     myLibrary.splice(i, 1);
   }
   });
-  bookshelf.removeChild(listItem);
-  doAndroidsDreamOfElectricSheep.renderLibrary();
+  
   dialogDelete.close();
+  renderLibrary();
 });
 
+editBtn.addEventListener('click', (e) => {
+  e.preventDefault();
 
-doAndroidsDreamOfElectricSheep.renderLibrary();
+  myLibrary.forEach((book) => {
+    if (book.id === itemId) {
+      book.title = editTitle.value;
+      book.author = editAuthor.value;
+      book.pages = editPages.value;
+    }
+  });
+  dialogEdit.close();
+  renderLibrary();
+});
