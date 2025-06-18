@@ -22,10 +22,7 @@
         <li><button class="new-btn">New Book</button></li>
       </ul>
     </header>
-    <div>
-      
-    </div>
-    <dialog class="dialog-add">
+    <dialog class="dialog dialog-add">
       <form>
         <h2>Enter the book information</h2>
         <p>
@@ -52,8 +49,8 @@
           </select>
         </p>
         <p class="btn-container">
-          <button type="reset" class="cancel-btn">Cancel</button>
-          <button type="reset" class="add-btn">Add</button>
+          <button class="cancel-btn">Cancel</button>
+          <button class="add-btn">Add</button>
         </p>
       </form>
     </dialog>
@@ -62,7 +59,7 @@
         <h3>My Library</h3>
         <ul class="bookshelf"></ul>
       </section>
-      <dialog class="dialog-rating">
+      <dialog class="dialog dialog-rating">
         <form>
           <h2>What's your rating?</h2>
           <p>
@@ -77,8 +74,17 @@
             </select>
           </p>
           <p class="btn-container">
-            <button type="reset" class="cancel-btn">Cancel</button>
-            <button type="reset" class="confirm-btn">Confirm</button>
+            <button class="cancel-btn">Cancel</button>
+            <button class="confirm-btn">Confirm</button>
+          </p>
+        </form>
+      </dialog>
+      <dialog class="dialog dialog-delete">
+        <form>
+          <h2>Want to delete this book?</h2>
+          <p class="btn-container">
+            <button class="cancel-btn">Cancel</button>
+            <button class="delete-btn">Delete</button>
           </p>
         </form>
       </dialog>

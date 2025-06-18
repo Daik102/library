@@ -22,6 +22,7 @@ const charlieAndTheChocolateFactory = new Book('Charlie and the Chocolate Factor
 const myFathersDragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', 'not-read-yet');
 const alicesAdventuresInWonderland = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', 'not-read-yet');
 
+
 addBookToLibrary(doAndroidsDreamOfElectricSheep, nineteenEightyFour, theClient, charlieAndTheChocolateFactory, myFathersDragon, alicesAdventuresInWonderland);
 
 const bookshelf = document.querySelector('.bookshelf');
@@ -30,17 +31,19 @@ const dialogAdd = document.querySelector('.dialog-add');
 const cancelBtn = document.querySelectorAll('.cancel-btn');
 const addBtn = document.querySelector('.add-btn');
 const confirmBtn = document.querySelector('.confirm-btn');
+const deleteBtn = document.querySelector('.delete-btn');
 const inputTitle = document.getElementById('title');
 const inputAuthor = document.getElementById('author');
 const inputPages = document.getElementById('pages');
 const ratingNewBook = document.getElementById('rating-new-book');
 const dialogRating = document.querySelector('.dialog-rating');
 const ratingOldBook = document.getElementById('rating-old-book');
+const dialogDelete = document.querySelector('.dialog-delete');
+const dialog = document.querySelectorAll('dialog');
 let itemId;
+let listItem;
 
-renderLibrary();
-
-function renderLibrary() {
+Book.prototype.renderLibrary = function() {
   bookshelf.innerHTML = '';
   
   myLibrary.forEach((book) => {
@@ -50,7 +53,7 @@ function renderLibrary() {
     const pages = document.createElement('p');
     const btnContainer = document.createElement('p');
     const ratingBtn = document.createElement('button');
-    const deleteBtn = document.createElement('button');
+    const crossBtn = document.createElement('button');
     
     item.setAttribute('data-id', `${book.id}`);
     title.textContent = book.title;
@@ -58,6 +61,9 @@ function renderLibrary() {
     pages.textContent = book.pages + ' pages';
     btnContainer.classList = 'btn-container';
     ratingBtn.classList = 'rating-btn';
+    if (book.rating === 'not-read-yet') {
+      ratingBtn.classList.add('not-read-yet');
+    }
     
     if (book.rating === 'five-stars') {
       ratingBtn.innerHTML = '&#9733;&#9733;&#9733;&#9733;&#9733;';
@@ -72,72 +78,104 @@ function renderLibrary() {
     } else {
       ratingBtn.textContent = book.rating;
     }
-    
 
-    deleteBtn.classList = 'delete-btn';
-    deleteBtn.innerHTML = '&#10005;';
+    crossBtn.classList = 'cross-btn';
+    crossBtn.innerHTML = '&#10005;';
+
     item.appendChild(title);
     item.appendChild(author);
     item.appendChild(pages);
     btnContainer.appendChild(ratingBtn);
-    btnContainer.appendChild(deleteBtn);
+    btnContainer.appendChild(crossBtn);
     item.appendChild(btnContainer);
     bookshelf.appendChild(item);
 
     ratingBtn.addEventListener('click', (e) => {
       itemId = e.target.parentNode.parentNode.dataset.id;
+      
+      if (book.id === itemId) {
+        if (book.rating === 'five-stars') {
+          ratingOldBook.options[1].selected = true;
+        } else if (book.rating === 'four-stars') {
+          ratingOldBook.options[2].selected = true;
+        } else if (book.rating === 'three-stars') {
+          ratingOldBook.options[3].selected = true;
+        } else if (book.rating === 'two-stars') {
+          ratingOldBook.options[4].selected = true;
+        } else if (book.rating === 'one-stars') {
+          ratingOldBook.options[5].selected = true;
+        } else {
+          ratingOldBook.options[0].selected = true;
+        }
+      }
+
       dialogRating.showModal();
     });
 
-    cancelBtn.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        dialogRating.close();
-      });
-    });
-
-    deleteBtn.addEventListener('click', (e) => {
-      bookshelf.removeChild(e.target.parentNode.parentNode);
+    crossBtn.addEventListener('click', (e) => {
+      itemId = e.target.parentNode.parentNode.dataset.id;
+      listItem = e.target.parentNode.parentNode;
+      dialogDelete.showModal();
     });
   });
 }
 
+newBtn.addEventListener('click', () => {
+  inputTitle.value = '';
+  inputAuthor.value = '';
+  inputPages.value = '';
+  ratingNewBook.options[0].selected = true;
 
-confirmBtn.addEventListener('click', () => {
-  let rating = ratingOldBook.value;
+  dialogAdd.showModal();
+});
 
+cancelBtn.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    dialog.forEach((modal) => {
+      modal.close();
+    });
+  });
+});
+
+addBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const title = inputTitle.value;
+  const author = inputAuthor.value;
+  const pages = inputPages.value;
+  const rating = ratingNewBook.value;
+
+  const newBook = new Book(title, author, pages, rating);
+  addBookToLibrary(newBook);
+  doAndroidsDreamOfElectricSheep.renderLibrary();
+  dialogAdd.close();
+});
+
+confirmBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const rating = ratingOldBook.value;
+  
   myLibrary.forEach((book) => {
     if (book.id === itemId) {
       book.rating = rating;
     }
   });
-  renderLibrary();
+  doAndroidsDreamOfElectricSheep.renderLibrary();
   dialogRating.close();
 });
 
+deleteBtn.addEventListener('click', (event) => {
+  event.preventDefault();
 
-newBtn.addEventListener('click', (e) => {
-  dialogAdd.showModal();
-  document.addEventListener('keydown', () => {
-    if (e.key === 'Enter') {
-      
-    }
+  myLibrary.forEach((book, i) => {
+    if (book.id === itemId) {
+    myLibrary.splice(i, 1);
+  }
   });
+  bookshelf.removeChild(listItem);
+  doAndroidsDreamOfElectricSheep.renderLibrary();
+  dialogDelete.close();
 });
 
-cancelBtn.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    dialogAdd.close();
-  });
-});
 
-addBtn.addEventListener('click', () => {
-  let title = inputTitle.value;
-  let author = inputAuthor.value;
-  let pages = inputPages.value;
-  let rating = ratingNewBook.value;
-
-  const newBook = new Book(title, author, pages, rating);
-  addBookToLibrary(newBook);
-  renderLibrary();
-  dialogAdd.close();
-});
+doAndroidsDreamOfElectricSheep.renderLibrary();
