@@ -39,6 +39,8 @@ const dialogDelete = document.querySelector('.dialog-delete');
 const dialogEdit = document.querySelector('.dialog-edit');
 const editBtn = document.querySelector('.edit-btn');
 const dialogSort = document.querySelector('.dialog-sort');
+const dialogRecommendation = document.querySelector('.dialog-recommendation');
+const dialogOthers = document.querySelector('.dialog-others');
 const dialog = document.querySelectorAll('dialog');
 const blankAlertTitle = document.querySelector('.blank-alert-title');
 const blankAlertAuthor = document.querySelector('.blank-alert-author');
@@ -49,17 +51,22 @@ const oldestBtn = document.querySelector('.oldest-btn');
 const newestBtn = document.querySelector('.newest-btn');
 const highRatingsBtn = document.querySelector('.high-ratings-btn');
 const lowRatingsBtn = document.querySelector('.low-ratings-btn');
+const recommendedItems = document.querySelectorAll('.recommended-item');
+const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
+const users = document.querySelectorAll('.user');
 let inputTitle = document.getElementById('title');
 let inputAuthor = document.getElementById('author');
 let inputPages = document.getElementById('pages');
 let editTitle = document.getElementById('edit-title');
 let editAuthor = document.getElementById('edit-author');
 let editPages = document.getElementById('edit-pages');
+let newBook;
 let ratingBtn;
 let crossBtn;
 let title;
 let itemId;
 let listItem;
+let index;
 let searchResult = [];
 let highestArray = [];
 let lowestArray = [];
@@ -179,7 +186,6 @@ function renderLibrary() {
     });
     highestArray = [];
   } else if (lowestArray[0]) {
-    console.log(lowestArray);
     lowestArray.forEach((book) => {
       createBooks(book);
     });
@@ -259,10 +265,10 @@ addBtn.addEventListener('click', (e) => {
     blankAlertPages.classList.remove('on-alert');
   }
 
-  const newBook = new Book(title, author, pages, rating);
+  newBook = new Book(title, author, pages, rating);
   addBookToLibrary(newBook);
-  dialogAdd.close();
   renderLibrary();
+  dialogAdd.close();
 });
 
 confirmBtn.addEventListener('click', (e) => {
@@ -274,8 +280,8 @@ confirmBtn.addEventListener('click', (e) => {
       book.rating = rating;
     }
   });
-  dialogRating.close();
   renderLibrary();
+  dialogRating.close();
 });
 
 deleteBtn.addEventListener('click', (event) => {
@@ -287,8 +293,8 @@ deleteBtn.addEventListener('click', (event) => {
   }
   });
   
-  dialogDelete.close();
   renderLibrary();
+  dialogDelete.close();
 });
 
 editBtn.addEventListener('click', (e) => {
@@ -301,8 +307,8 @@ editBtn.addEventListener('click', (e) => {
       book.pages = editPages.value;
     }
   });
-  dialogEdit.close();
   renderLibrary();
+  dialogEdit.close();
 });
 
 document.body.addEventListener('keydown', (e) => {
@@ -327,8 +333,8 @@ sortBtn.addEventListener('click', () => {
 
 oldestBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  renderLibrary();
   dialogSort.close();
+  renderLibrary();
 });
 
 newestBtn.addEventListener('click', (e) => {
@@ -351,5 +357,31 @@ lowRatingsBtn.addEventListener('click', (e) => {
   lowestArray = myLibrary.toSorted((a, b) => a.rating - b.rating);
   renderLibrary();
   dialogSort.close();
-  console.log(myLibrary);
+});
+
+recommendedItems.forEach((item, i) => {
+  item.addEventListener('click', () => {
+    index = i;
+    dialogRecommendation.showModal();
+  });
+});
+
+addBtnForRecommendation.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (index === 0) {
+    newBook = new Book('The Long Good-bye', 'Raymond Chandler', '320', '0');
+  } else if (index === 1) {
+    newBook = new Book('Flowers for Algernon', 'Daniel Keyes', '311', '0');
+  } else if (index === 2) {
+    newBook = new Book('Moon Palace', 'Paul Auster', '320', '0');
+  }
+  addBookToLibrary(newBook);
+  renderLibrary();
+  dialogRecommendation.close();
+});
+
+users.forEach((user) => {
+  user.addEventListener('click', () => {
+    dialogOthers.showModal();
+  });
 });

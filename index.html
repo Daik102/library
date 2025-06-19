@@ -12,8 +12,8 @@
       <ul>
         <li><img class="icons" src="./icons/magnify.svg" alt="search-button"></li>
         <li><div><input class="search-bar" type="text"></div></li>
-        <li><img class="icons" src="./icons/bell-ring-outline.svg" alt="notification-button"></li>
-        <li><img class="sub-photo" src="./photos/graycat.jpg" alt="gray-cat"></li>
+        <li><img class="icons" src="./icons/bell-ring-outline.svg" alt="notification-button" title="No notification"></li>
+        <li><a href="https://daik102.github.io/admin-dashboard/" target="_blank"><img class="sub-photo" src="./photos/graycat.jpg" alt="gray-cat"></a></li>
         <li><a href="https://github.com/Daik102/library" target="_blank"><span>Daik</span></a></li>
       </ul>
       <ul>
@@ -132,56 +132,74 @@
           <button class="cancel-btn wide-btn">Cancel</button>
         </form>
       </dialog>
-      <section class="announcements">
-        <h3>Announcements</h3>
+      <section class="recommendations">
+        <h3>recommendations</h3>
         <ul>
-          <li>
-            <h5>Site Maintenance</h5>
-            <p>Some contents might be added in the future after finishing another works on the Odin Project.</p>
+          <li class="recommended-item">
+            <h5>The Long Good-bye</h5>
+            <p>Raymond Chandler</p>
+            <p>320 pages</p>
           </li>
-          <li>
-            <h5>Motorcycle Day</h5>
-            <p>In Japan, August 19 is recognized as Motorcycle day. Let's ride on this day to celebrate!</p>
+          <li class="recommended-item">
+            <h5>Flowers for Algernon</h5>
+            <p>Daniel Keyes</p>
+            <p>311 pages</p>
           </li>
-          <li>
-            <h5>Site Policy</h5>
-            <p>I've been learning to code on the Odin Project to become a web developer. Feel free to walk through my site.</p>
+          <li class="recommended-item">
+            <h5>Moon Palace</h5>
+            <p>Paul Auster</p>
+            <p>320 pages</p>
           </li>
         </ul>
       </section>
-      <section class="trending">
-        <h3>Trending</h3>
+      <dialog class="dialog-recommendation">
+        <form>
+          <h2>Do you want to add this book?</h2>
+          <p class="btn-container">
+            <button class="cancel-btn">Cancel</button>
+            <button class="add-btn-for-recommendation">Add</button>
+          </p>
+        </form>
+      </dialog>
+      <section class="others">
+        <h3>Other bookshelves</h3>
         <ul>
-          <li>
+          <li class="user">
             <img src="./photos/australian-shepherd.jpg" alt="female-dog">
             <div>
-              <h6>@love_swimming</h6>
+              <h6>@love_reading</h6>
               <p>Sally</p>
             </div>
           </li>
-          <li>
+          <li class="user">
             <img class="orca" src="./photos/orca.jpg" alt="orca">
             <div>
-              <h6>@s901</h6>
+              <h6>@Cyberpunk_lunatic</h6>
               <p>Moon</p>
             </div>
           </li>
-          <li>
+          <li class="user">
             <img src="./photos/white-dog-mini.jpg" alt="white-dog">
             <div>
-              <h6>@snow_mountain</h6>
+              <h6>@snow_pages</h6>
               <p>Sierra</p>
             </div>
           </li>
-          <li>
+          <li class="user">
             <img src="./photos/hedgehog.avif" alt="hedgehog">
             <div>
-              <h6>@mr_hog</h6>
+              <h6>@mr_book</h6>
               <p>Bob</p>
             </div>
           </li>
         </ul>
       </section>
+      <dialog class="dialog-others">
+        <form>
+          <h2>Sorry, this is a practice site.</h2>
+          <button class="cancel-btn">OK</button>
+        </form>
+      </dialog>
     </main>
   </div>
   <script src="library.js"></script>

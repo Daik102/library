@@ -21,10 +21,10 @@
   --sub-theme: rgb(87, 129, 132);
   --item-theme: rgb(212, 233, 237);
   --button-theme: rgb(255, 55, 55);
-  --button-theme-lightgreen: rgb(43, 207, 120);
+  --button-theme-lightgreen: rgb(41, 210, 114);
   --button-hover-theme-red: rgb(255, 105, 105);
   --button-hover-theme-green: rgb(87, 162, 165);
-  --button-hover-theme-lightgreen: rgb(40, 225, 126);
+  --button-hover-theme-lightgreen: rgb(45, 233, 126);
   --accent-theme: rgb(37, 74, 84);
   --hover-theme: rgb(242, 252, 255);
   --paragraph-theme: #444;
@@ -190,6 +190,13 @@ dialog {
   padding: 2rem 0;
 }
 
+.dialog-others form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 ::backdrop {
   background-color: var(--modal-theme);
 }
@@ -291,7 +298,8 @@ dialog button {
 .add-btn, 
 .confirm-btn,
 .delete-btn,
-.edit-btn {
+.edit-btn,
+.add-btn-for-recommendation {
   background-color: var(--button-theme);
 }
 
@@ -307,7 +315,8 @@ dialog button {
 .add-btn:hover, 
 .confirm-btn:hover,
 .delete-btn:hover,
-.edit-btn:hover {
+.edit-btn:hover,
+.add-btn-for-recommendation:hover {
   background-color: var(--button-hover-theme-red);
 }
 
@@ -336,10 +345,10 @@ dialog button {
 }
 
 .sort-btn {
-  padding: 0.4rem 1.6rem;
+  padding: 0.4rem 2.8rem;
   font-size: 1.8rem;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 2rem;
   background-color: var(--button-theme-lightgreen);
   color: var(--white-theme);
 }
@@ -439,7 +448,7 @@ dialog button {
   cursor: pointer;
 }
 
-.announcements ul {
+.recommendations ul {
   background-color: var(--item-theme);
   width: 30rem;
   height: 30rem;
@@ -449,39 +458,39 @@ dialog button {
   box-shadow: 0.8rem 0.8rem 0.8rem 0 rgba(5, 5, 11, 0.2);
 }
 
-.announcements li {
+.recommendations li {
   padding: 1.2rem 2rem 0.8rem;
   border-bottom: 0.1rem solid var(--white-theme);
   cursor: pointer;
 }
 
-.announcements li:hover {
+.recommendations li:hover {
   background-color: var(--hover-theme);
 }
 
-.announcements li:first-child {
+.recommendations li:first-child {
   border-radius: 0.8rem 0.8rem 0 0;
 }
 
-.announcements li:last-child {
+.recommendations li:last-child {
   border-bottom: none;
   border-radius: 0 0 0.8rem 0.8rem;
 }
 
-.announcements h5 {
+.recommendations h5 {
   font-size: 1.8rem;
   color: var(--main-theme);
-  margin-bottom: 0.4rem;
+  margin-bottom: 1.2rem;
 }
 
-.announcements p {
+.recommendations p {
   font-size: 1.4rem;
-  padding: 0.2rem 0;
+  margin: 0.6rem 0;
   color: var(--paragraph-theme);
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-.trending ul {
+.others ul {
   background-color: var(--item-theme);
   width: 30rem;
   height: 30rem;
@@ -491,7 +500,7 @@ dialog button {
   box-shadow: 0.8rem 0.8rem 0.8rem 0 rgba(5, 5, 11, 0.2);
 }
 
-.trending li {
+.others li {
   display: grid;
   grid-template-columns: 5rem 1fr;
   align-items: center;
@@ -500,19 +509,19 @@ dialog button {
   cursor: pointer;
 }
 
-.trending li:hover {
+.others li:hover {
   background-color: var(--hover-theme);
 }
 
-.trending li:first-child {
+.others li:first-child {
   border-radius: 0.8rem 0.8rem 0 0;
 }
 
-.trending li:last-child {
+.others li:last-child {
   border-radius: 0 0 0.8rem 0.8rem;
 }
 
-.trending img {
+.others img {
   width: 4.8rem;
   height: 4.8rem;
   border-radius: 50%;
@@ -523,7 +532,7 @@ dialog button {
   object-position: -2rem;
 }
 
-.trending h6 {
+.others h6 {
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--main-theme);
@@ -531,7 +540,7 @@ dialog button {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-.trending p {
+.others p {
   font-size: 1.6rem;
   color: var(--paragraph-theme);
 }
