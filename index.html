@@ -11,7 +11,7 @@
     <header class="header">
       <ul>
         <li><img class="icons" src="./icons/magnify.svg" alt="search-button"></li>
-        <li><div><input type="text"></div></li>
+        <li><div><input class="search-bar" type="text"></div></li>
         <li><img class="icons" src="./icons/bell-ring-outline.svg" alt="notification-button"></li>
         <li><img class="sub-photo" src="./photos/graycat.jpg" alt="gray-cat"></li>
         <li><a href="https://github.com/Daik102/library" target="_blank"><span>Daik</span></a></li>
@@ -52,12 +52,12 @@
         <p>
           <label for="rating-new-book">Rating: </label>
           <select name="rating" id="rating-new-book">
-            <option value="not-read-yet">Not read yet</option>
-            <option value="five-stars">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
-            <option value="four-stars">&#9734;&#9734;&#9734;&#9734;</option>
-            <option value="three-stars">&#9734;&#9734;&#9734;</option>
-            <option value="two-stars">&#9734;&#9734;</option>
-            <option value="one-star">&#9734;</option>
+            <option value="0">Not read yet</option>
+            <option value="5">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
+            <option value="4">&#9734;&#9734;&#9734;&#9734;</option>
+            <option value="3">&#9734;&#9734;&#9734;</option>
+            <option value="2">&#9734;&#9734;</option>
+            <option value="1">&#9734;</option>
           </select>
         </p>
         <p class="btn-container">
@@ -69,6 +69,7 @@
     <main class="main">
       <section class="projects">
         <h3>My Library</h3>
+        <button class="sort-btn">Sort</button>
         <ul class="bookshelf"></ul>
       </section>
       <dialog class="dialog dialog-rating">
@@ -77,12 +78,12 @@
           <p>
             <label for="rating-old-book">Rating: </label>
             <select name="rating" id="rating-old-book">
-              <option value="not-read-yet">Not read yet</option>
-              <option value="five-stars">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
-              <option value="four-stars">&#9734;&#9734;&#9734;&#9734;</option>
-              <option value="three-stars">&#9734;&#9734;&#9734;</option>
-              <option value="two-stars">&#9734;&#9734;</option>
-              <option value="one-star">&#9734;</option>
+              <option value="0">Not read yet</option>
+              <option value="5">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
+              <option value="4">&#9734;&#9734;&#9734;&#9734;</option>
+              <option value="3">&#9734;&#9734;&#9734;</option>
+              <option value="2">&#9734;&#9734;</option>
+              <option value="1">&#9734;</option>
             </select>
           </p>
           <p class="btn-container">
@@ -119,6 +120,16 @@
             <button class="cancel-btn">Cancel</button>
             <button class="edit-btn">Edit</button>
           </p>
+        </form>
+      </dialog>
+      <dialog class="dialog dialog-sort">
+        <form>
+          <h2>What sort do you prefer?</h2>
+          <button class="oldest-btn">Oldest (default)</button>
+          <button class="newest-btn">Newest</button>
+          <button class="high-ratings-btn">High ratings</button>
+          <button class="low-ratings-btn">Low ratings</button>
+          <button class="cancel-btn wide-btn">Cancel</button>
         </form>
       </dialog>
       <section class="announcements">
