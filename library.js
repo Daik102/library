@@ -1,5 +1,3 @@
-const myLibrary = [];
-
 function Book(title, author, pages, rating) {
   this.id = crypto.randomUUID();
   this.title = title;
@@ -11,10 +9,7 @@ function Book(title, author, pages, rating) {
   }
 }
 
-function addBookToLibrary(...rest) {
-  myLibrary.push(...rest);
-}
-
+const myLibrary = [];
 const doAndroidsDreamOfElectricSheep = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
 const theClient = new Book('The Client', 'John Grisham', '422', '4');
 const nineteenEightyFour = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
@@ -22,13 +17,22 @@ const charlieAndTheChocolateFactory = new Book('Charlie and the Chocolate Factor
 const myFathersDragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
 const alicesAdventuresInWonderland = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
 
+function addBookToLibrary(...rest) {
+  myLibrary.push(...rest);
+}
 
 addBookToLibrary(doAndroidsDreamOfElectricSheep, theClient, nineteenEightyFour, charlieAndTheChocolateFactory, myFathersDragon, alicesAdventuresInWonderland);
 
 const bookshelf = document.querySelector('.bookshelf');
+const searchBar = document.querySelector('.search-bar');
+const sortBtn = document.querySelector('.sort-btn');
+const oldestBtn = document.querySelector('.oldest-btn');
+const newestBtn = document.querySelector('.newest-btn');
+const highRatingsBtn = document.querySelector('.high-ratings-btn');
+const lowRatingsBtn = document.querySelector('.low-ratings-btn');
 const newBtn = document.querySelector('.new-btn');
 const dialogAdd = document.querySelector('.dialog-add');
-const cancelBtn = document.querySelectorAll('.cancel-btn');
+const cancelBtns = document.querySelectorAll('.cancel-btn');
 const addBtn = document.querySelector('.add-btn');
 const confirmBtn = document.querySelector('.confirm-btn');
 const deleteBtn = document.querySelector('.delete-btn');
@@ -38,19 +42,14 @@ const ratingOldBook = document.getElementById('rating-old-book');
 const dialogDelete = document.querySelector('.dialog-delete');
 const dialogEdit = document.querySelector('.dialog-edit');
 const editBtn = document.querySelector('.edit-btn');
+const dialogNoBooks = document.querySelector('.dialog-no-books');
 const dialogSort = document.querySelector('.dialog-sort');
 const dialogRecommendation = document.querySelector('.dialog-recommendation');
 const dialogOthers = document.querySelector('.dialog-others');
-const dialog = document.querySelectorAll('dialog');
+const dialogs = document.querySelectorAll('dialog');
 const blankAlertTitle = document.querySelector('.blank-alert-title');
 const blankAlertAuthor = document.querySelector('.blank-alert-author');
 const blankAlertPages = document.querySelector('.blank-alert-pages');
-const searchBar = document.querySelector('.search-bar');
-const sortBtn = document.querySelector('.sort-btn');
-const oldestBtn = document.querySelector('.oldest-btn');
-const newestBtn = document.querySelector('.newest-btn');
-const highRatingsBtn = document.querySelector('.high-ratings-btn');
-const lowRatingsBtn = document.querySelector('.low-ratings-btn');
 const recommendedItems = document.querySelectorAll('.recommended-item');
 const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
 const users = document.querySelectorAll('.user');
@@ -60,6 +59,9 @@ let inputPages = document.getElementById('pages');
 let editTitle = document.getElementById('edit-title');
 let editAuthor = document.getElementById('edit-author');
 let editPages = document.getElementById('edit-pages');
+let searchArray = [];
+let highestArray = [];
+let lowestArray = [];
 let newBook;
 let ratingBtn;
 let crossBtn;
@@ -67,16 +69,13 @@ let title;
 let itemId;
 let listItem;
 let index;
-let searchResult = [];
-let highestArray = [];
-let lowestArray = [];
 
 Book.prototype.editRating = function() {
   ratingBtn.addEventListener('click', (e) => {
     itemId = e.target.parentNode.parentNode.dataset.id;
     myLibrary.forEach((book) => {
       if (book.id === itemId) {
-      if (book.rating === '5') {
+        if (book.rating === '5') {
           ratingOldBook.options[1].selected = true;
         } else if (book.rating === '4') {
           ratingOldBook.options[2].selected = true;
@@ -175,11 +174,11 @@ function createBooks(book) {
 function renderLibrary() {
   bookshelf.innerHTML = '';
 
-  if (searchResult[0]) {
-    searchResult.forEach((book) => {
+  if (searchArray[0]) {
+    searchArray.forEach((book) => {
       createBooks(book);
     });
-    searchResult = [];
+    searchArray = [];
   } else if (highestArray[0]) {
     highestArray.forEach((book) => {
       createBooks(book);
@@ -199,131 +198,23 @@ function renderLibrary() {
 
 renderLibrary();
 
-newBtn.addEventListener('click', () => {
-  inputTitle.value = '';
-  inputAuthor.value = '';
-  inputPages.value = '';
-  ratingNewBook.options[0].selected = true;
-
-  dialogAdd.showModal();
-});
-
-cancelBtn.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
-    blankAlertTitle.classList.remove('on-alert');
-  }
-  if (blankAlertAuthor.className === 'blank-alert blank-alert-author on-alert') {
-    blankAlertAuthor.classList.remove('on-alert');
-  }
-  if (blankAlertPages.className === 'blank-alert blank-alert-pages on-alert') {
-    blankAlertPages.classList.remove('on-alert');
-  }
-
-    dialog.forEach((modal) => {
-      modal.close();
-    });
-  });
-});
-
-addBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const title = inputTitle.value;
-  const author = inputAuthor.value;
-  const pages = inputPages.value;
-  const rating = ratingNewBook.value;
-
-  if (title === '') {
-    blankAlertTitle.classList.add('on-alert');
-    return;
-  } else if (author === '') {
-    if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
-      blankAlertTitle.classList.remove('on-alert');
-    }
-    blankAlertAuthor.classList.add('on-alert');
-    return;
-  } else if (pages === '') {
-    if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
-      blankAlertTitle.classList.remove('on-alert');
-    }
-    if (blankAlertAuthor.className === 'blank-alert blank-alert-author on-alert') {
-      blankAlertAuthor.classList.remove('on-alert');
-    }
-    blankAlertPages.classList.add('on-alert');
-    return;
-  }
-
-  if (blankAlertTitle.className === 'blank-alert blank-alert-title on-alert') {
-    blankAlertTitle.classList.remove('on-alert');
-  }
-  if (blankAlertAuthor.className === 'blank-alert blank-alert-author on-alert') {
-    blankAlertAuthor.classList.remove('on-alert');
-  }
-  if (blankAlertPages.className === 'blank-alert blank-alert-pages on-alert') {
-    blankAlertPages.classList.remove('on-alert');
-  }
-
-  newBook = new Book(title, author, pages, rating);
-  addBookToLibrary(newBook);
-  renderLibrary();
-  dialogAdd.close();
-});
-
-confirmBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const rating = ratingOldBook.value;
-  
-  myLibrary.forEach((book) => {
-    if (book.id === itemId) {
-      book.rating = rating;
-    }
-  });
-  renderLibrary();
-  dialogRating.close();
-});
-
-deleteBtn.addEventListener('click', (event) => {
-  event.preventDefault();
-
-  myLibrary.forEach((book, i) => {
-    if (book.id === itemId) {
-    myLibrary.splice(i, 1);
-  }
-  });
-  
-  renderLibrary();
-  dialogDelete.close();
-});
-
-editBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-
-  myLibrary.forEach((book) => {
-    if (book.id === itemId) {
-      book.title = editTitle.value;
-      book.author = editAuthor.value;
-      book.pages = editPages.value;
-    }
-  });
-  renderLibrary();
-  dialogEdit.close();
-});
-
 document.body.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    if (searchBar.value) {
-      myLibrary.forEach((book) => {
-        const titleWithLowerCase = book.title.toLowerCase();
-        const authorWithLowerCase = book.author.toLowerCase();
-        const searchWord = searchBar.value.toLowerCase();
-        if (titleWithLowerCase.includes(searchWord) || authorWithLowerCase.includes(searchWord)) {
-          searchResult.push(book);
-        }
-      });
-      renderLibrary();
+  if (e.key === 'Enter' && searchBar.value) {
+    myLibrary.forEach((book) => {
+      const titleWithLowerCase = book.title.toLowerCase();
+      const authorWithLowerCase = book.author.toLowerCase();
+      const searchWord = searchBar.value.toLowerCase();
+      if (titleWithLowerCase.includes(searchWord) || authorWithLowerCase.includes(searchWord)) {
+        searchArray.push(book);
+      }
+    });
+    searchBar.value = '';
+
+    if (!searchArray[0]) {
+      bookshelf.textContent = 'No books were found.';
+      return;
     }
+    renderLibrary();
   }
 });
 
@@ -333,8 +224,8 @@ sortBtn.addEventListener('click', () => {
 
 oldestBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  dialogSort.close();
   renderLibrary();
+  dialogSort.close();
 });
 
 newestBtn.addEventListener('click', (e) => {
@@ -357,6 +248,108 @@ lowRatingsBtn.addEventListener('click', (e) => {
   lowestArray = myLibrary.toSorted((a, b) => a.rating - b.rating);
   renderLibrary();
   dialogSort.close();
+});
+
+newBtn.addEventListener('click', () => {
+  inputTitle.value = '';
+  inputAuthor.value = '';
+  inputPages.value = '';
+  ratingNewBook.options[0].selected = true;
+
+  dialogAdd.showModal();
+});
+
+function removeOnAlert() {
+  if (blankAlertTitle.classList.contains('on-alert')) {
+    blankAlertTitle.classList.remove('on-alert');
+  } else if (blankAlertAuthor.classList.contains('on-alert')) {
+    blankAlertAuthor.classList.remove('on-alert');
+  } else if (blankAlertPages.classList.contains('on-alert')) {
+    blankAlertPages.classList.remove('on-alert');
+  }
+}
+
+cancelBtns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    removeOnAlert();
+
+    dialogs.forEach((modal) => {
+      modal.close();
+    });
+  });
+});
+
+addBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const title = inputTitle.value;
+  const author = inputAuthor.value;
+  const pages = inputPages.value;
+  const rating = ratingNewBook.value;
+
+  if (title === '') {
+    blankAlertTitle.classList.add('on-alert');
+    return;
+  } else if (author === '') {
+    if (blankAlertTitle.classList.contains('on-alert')) {
+      blankAlertTitle.classList.remove('on-alert');
+    }
+    blankAlertAuthor.classList.add('on-alert');
+    return;
+  } else if (pages === '') {
+    if (blankAlertTitle.classList.contains('on-alert')) {
+      blankAlertTitle.classList.remove('on-alert');
+    } else if (blankAlertAuthor.classList.contains('on-alert')) {
+      blankAlertAuthor.classList.remove('on-alert');
+    }
+    blankAlertPages.classList.add('on-alert');
+    return;
+  }
+
+  removeOnAlert();
+  newBook = new Book(title, author, pages, rating);
+  addBookToLibrary(newBook);
+  renderLibrary();
+  dialogAdd.close();
+});
+
+editBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  myLibrary.forEach((book) => {
+    if (book.id === itemId) {
+      book.title = editTitle.value;
+      book.author = editAuthor.value;
+      book.pages = editPages.value;
+    }
+  });
+  renderLibrary();
+  dialogEdit.close();
+});
+
+confirmBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const rating = ratingOldBook.value;
+  
+  myLibrary.forEach((book) => {
+    if (book.id === itemId) {
+      book.rating = rating;
+    }
+  });
+  renderLibrary();
+  dialogRating.close();
+});
+
+deleteBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  myLibrary.forEach((book, i) => {
+    if (book.id === itemId) {
+    myLibrary.splice(i, 1);
+  }
+  });
+  renderLibrary();
+  dialogDelete.close();
 });
 
 recommendedItems.forEach((item, i) => {
