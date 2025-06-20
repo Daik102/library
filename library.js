@@ -211,7 +211,7 @@ document.body.addEventListener('keydown', (e) => {
     searchBar.value = '';
 
     if (!searchArray[0]) {
-      bookshelf.textContent = 'No books were found.';
+      bookshelf.innerHTML = `No books were found.<br><br>You can go back with sort button.`;
       return;
     }
     renderLibrary();
