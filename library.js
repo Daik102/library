@@ -9,66 +9,24 @@ function Book(title, author, pages, rating) {
   }
 }
 
+const androids = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
+const client = new Book('The Client', 'John Grisham', '422', '4');
+const nineteen = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
+const charlie = new Book('Charlie and the Chocolate Factory', 'Roald Dahl', '155', '4');
+const dragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
+const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
 const myLibrary = [];
-const doAndroidsDreamOfElectricSheep = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
-const theClient = new Book('The Client', 'John Grisham', '422', '4');
-const nineteenEightyFour = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
-const charlieAndTheChocolateFactory = new Book('Charlie and the Chocolate Factory', 'Roald Dahl', '155', '4');
-const myFathersDragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
-const alicesAdventuresInWonderland = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
 
 function addBookToLibrary(...rest) {
   myLibrary.push(...rest);
 }
 
-addBookToLibrary(doAndroidsDreamOfElectricSheep, theClient, nineteenEightyFour, charlieAndTheChocolateFactory, myFathersDragon, alicesAdventuresInWonderland);
+addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
 
-const bookshelf = document.querySelector('.bookshelf');
-const searchBar = document.querySelector('.search-bar');
-const sortBtn = document.querySelector('.sort-btn');
-const oldestBtn = document.querySelector('.oldest-btn');
-const newestBtn = document.querySelector('.newest-btn');
-const highRatingsBtn = document.querySelector('.high-ratings-btn');
-const lowRatingsBtn = document.querySelector('.low-ratings-btn');
-const newBtn = document.querySelector('.new-btn');
-const dialogAdd = document.querySelector('.dialog-add');
-const cancelBtns = document.querySelectorAll('.cancel-btn');
-const addBtn = document.querySelector('.add-btn');
-const confirmBtn = document.querySelector('.confirm-btn');
-const deleteBtn = document.querySelector('.delete-btn');
-const ratingNewBook = document.getElementById('rating-new-book');
-const dialogRating = document.querySelector('.dialog-rating');
 const ratingOldBook = document.getElementById('rating-old-book');
-const dialogDelete = document.querySelector('.dialog-delete');
-const dialogEdit = document.querySelector('.dialog-edit');
-const editBtn = document.querySelector('.edit-btn');
-const dialogNoBooks = document.querySelector('.dialog-no-books');
-const dialogSort = document.querySelector('.dialog-sort');
-const dialogRecommendation = document.querySelector('.dialog-recommendation');
-const dialogOthers = document.querySelector('.dialog-others');
-const dialogs = document.querySelectorAll('dialog');
-const blankAlertTitle = document.querySelector('.blank-alert-title');
-const blankAlertAuthor = document.querySelector('.blank-alert-author');
-const blankAlertPages = document.querySelector('.blank-alert-pages');
-const recommendedItems = document.querySelectorAll('.recommended-item');
-const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
-const users = document.querySelectorAll('.user');
-let inputTitle = document.getElementById('title');
-let inputAuthor = document.getElementById('author');
-let inputPages = document.getElementById('pages');
-let editTitle = document.getElementById('edit-title');
-let editAuthor = document.getElementById('edit-author');
-let editPages = document.getElementById('edit-pages');
-let searchArray = [];
-let highestArray = [];
-let lowestArray = [];
-let newBook;
+const dialogRating = document.querySelector('.dialog-rating');
 let ratingBtn;
-let crossBtn;
-let title;
 let itemId;
-let listItem;
-let index;
 
 Book.prototype.editRating = function() {
   ratingBtn.addEventListener('click', (e) => {
@@ -94,6 +52,10 @@ Book.prototype.editRating = function() {
   });
 }
 
+const dialogDelete = document.querySelector('.dialog-delete');
+let crossBtn;
+let listItem;
+
 Book.prototype.deleteItem = function() {
   crossBtn.addEventListener('click', (e) => {
     itemId = e.target.parentNode.parentNode.dataset.id;
@@ -101,6 +63,13 @@ Book.prototype.deleteItem = function() {
     dialogDelete.showModal();
   });
 }
+
+const bookshelf = document.querySelector('.bookshelf');
+const dialogEdit = document.querySelector('.dialog-edit');
+let editTitle = document.getElementById('edit-title');
+let editAuthor = document.getElementById('edit-author');
+let editPages = document.getElementById('edit-pages');
+let title;
 
 function createBooks(book) {
   const item = document.createElement('li');
@@ -167,9 +136,13 @@ function createBooks(book) {
     dialogEdit.showModal();
   });
   
-  doAndroidsDreamOfElectricSheep.editRating();
-  doAndroidsDreamOfElectricSheep.deleteItem();
+  androids.editRating();
+  androids.deleteItem();
 }
+
+let searchArray = [];
+let highestArray = [];
+let lowestArray = [];
 
 function renderLibrary() {
   bookshelf.innerHTML = '';
@@ -199,6 +172,8 @@ function renderLibrary() {
 renderLibrary();
 
 document.body.addEventListener('keydown', (e) => {
+  const searchBar = document.querySelector('.search-bar');
+
   if (e.key === 'Enter' && searchBar.value) {
     myLibrary.forEach((book) => {
       const titleWithLowerCase = book.title.toLowerCase();
@@ -218,15 +193,22 @@ document.body.addEventListener('keydown', (e) => {
   }
 });
 
+const sortBtn = document.querySelector('.sort-btn');
+const dialogSort = document.querySelector('.dialog-sort');
+
 sortBtn.addEventListener('click', () => {
   dialogSort.showModal();
 });
+
+const oldestBtn = document.querySelector('.oldest-btn');
 
 oldestBtn.addEventListener('click', (e) => {
   e.preventDefault();
   renderLibrary();
   dialogSort.close();
 });
+
+const newestBtn = document.querySelector('.newest-btn');
 
 newestBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -236,12 +218,16 @@ newestBtn.addEventListener('click', (e) => {
   dialogSort.close();
 });
 
+const highRatingsBtn = document.querySelector('.high-ratings-btn');
+
 highRatingsBtn.addEventListener('click', (e) => {
   e.preventDefault();
   highestArray = myLibrary.toSorted((a, b) => b.rating - a.rating);
   renderLibrary();
   dialogSort.close();
 });
+
+const lowRatingsBtn = document.querySelector('.low-ratings-btn');
 
 lowRatingsBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -250,12 +236,21 @@ lowRatingsBtn.addEventListener('click', (e) => {
   dialogSort.close();
 });
 
+const newBtn = document.querySelector('.new-btn');
+const dialogAdd = document.querySelector('.dialog-add');
+const ratingNewBook = document.getElementById('rating-new-book');
+const blankAlertTitle = document.querySelector('.blank-alert-title');
+const blankAlertAuthor = document.querySelector('.blank-alert-author');
+const blankAlertPages = document.querySelector('.blank-alert-pages');
+let inputTitle = document.getElementById('title');
+let inputAuthor = document.getElementById('author');
+let inputPages = document.getElementById('pages');
+
 newBtn.addEventListener('click', () => {
   inputTitle.value = '';
   inputAuthor.value = '';
   inputPages.value = '';
   ratingNewBook.options[0].selected = true;
-
   dialogAdd.showModal();
 });
 
@@ -269,6 +264,9 @@ function removeOnAlert() {
   }
 }
 
+const cancelBtns = document.querySelectorAll('.cancel-btn');
+const dialogs = document.querySelectorAll('dialog');
+
 cancelBtns.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -279,6 +277,9 @@ cancelBtns.forEach((btn) => {
     });
   });
 });
+
+const addBtn = document.querySelector('.add-btn');
+let newBook;
 
 addBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -313,6 +314,8 @@ addBtn.addEventListener('click', (e) => {
   dialogAdd.close();
 });
 
+const editBtn = document.querySelector('.edit-btn');
+
 editBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
@@ -327,6 +330,8 @@ editBtn.addEventListener('click', (e) => {
   dialogEdit.close();
 });
 
+const confirmBtn = document.querySelector('.confirm-btn');
+
 confirmBtn.addEventListener('click', (e) => {
   e.preventDefault();
   const rating = ratingOldBook.value;
@@ -340,6 +345,8 @@ confirmBtn.addEventListener('click', (e) => {
   dialogRating.close();
 });
 
+const deleteBtn = document.querySelector('.delete-btn');
+
 deleteBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
@@ -352,12 +359,18 @@ deleteBtn.addEventListener('click', (e) => {
   dialogDelete.close();
 });
 
+const recommendedItems = document.querySelectorAll('.recommended-item');
+const dialogRecommendation = document.querySelector('.dialog-recommendation');
+let index;
+
 recommendedItems.forEach((item, i) => {
   item.addEventListener('click', () => {
     index = i;
     dialogRecommendation.showModal();
   });
 });
+
+const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
 
 addBtnForRecommendation.addEventListener('click', (e) => {
   e.preventDefault();
@@ -372,6 +385,9 @@ addBtnForRecommendation.addEventListener('click', (e) => {
   renderLibrary();
   dialogRecommendation.close();
 });
+
+const users = document.querySelectorAll('.user');
+const dialogOthers = document.querySelector('.dialog-others');
 
 users.forEach((user) => {
   user.addEventListener('click', () => {
