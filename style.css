@@ -17,18 +17,19 @@
 }
 
 :root {
-  --main-theme: rgb(35, 64, 68);
-  --sub-theme: rgb(87, 129, 132);
-  --item-theme: rgb(212, 233, 237);
-  --button-theme: rgb(255, 55, 55);
-  --button-theme-lightgreen: rgb(41, 210, 114);
-  --button-hover-theme-red: rgb(255, 105, 105);
-  --button-hover-theme-green: rgb(87, 162, 165);
-  --button-hover-theme-lightgreen: rgb(45, 233, 126);
-  --accent-theme: rgb(37, 74, 84);
+  --main-theme: #234044;
+  --sub-theme: #578184;
+  --item-theme: #d4e9ed;
+  --button-theme: #ff3737;
+  --button-theme-lightgreen: #29d272;
+  --button-hover-theme-red: #ff6969;
+  --button-hover-theme-green: #57a2a5;
+  --button-hover-theme-lightgreen: #2de97e;
+  --accent-theme: #254a54;
   --paragraph-theme: #444;
-  --white-theme: rgb(242, 252, 255);
+  --white-theme: #f2fcff;
   --modal-theme: rgba(35, 64, 68, 0.65);
+  --shadow-theme: rgba(5, 5, 11, 0.2);
 }
 
 body {
@@ -41,6 +42,10 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+button {
+  border: none;
 }
 
 input,
@@ -101,7 +106,7 @@ button {
 }
 
 .header input {
-  width: 100%;
+  min-width: 44rem;
   font-size: 1.8rem;
   letter-spacing: 0.1rem;
   border: none;
@@ -132,7 +137,7 @@ button {
 
 .header p {
   color: var(--white-theme);
-  font-size: 3rem;
+  font-size: 3.4rem;
 }
 
 .sort-btn,
@@ -140,7 +145,6 @@ button {
   height: 4rem;
   padding: 0.2rem 0.4rem;
   font-size: 1.8rem;
-  border: none;
   border-radius: 2rem;
   color: var(--white-theme);
 }
@@ -350,7 +354,7 @@ dialog button {
   padding: 2rem 1.6rem 2rem 2.4rem;
   background-color: var(--white-theme);
   border-radius: 0.8rem;
-  box-shadow: 0.8rem 0.8rem 0.8rem 0 rgba(5, 5, 11, 0.2);
+  box-shadow: 0.8rem 0.8rem 0.8rem 0 var(--shadow-theme);
 }
 
 .not-read-notice {
@@ -455,8 +459,8 @@ dialog button {
 
 .recommendations p {
   font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-size: 1.4rem;
-  margin: 0.6rem 0;
+  font-size: 1.6rem;
+  margin: 0.4rem 0;
   color: var(--paragraph-theme);
 }
 
@@ -467,7 +471,7 @@ dialog button {
   height: 30rem;
   background-color: var(--item-theme);
   border-radius: 0.8rem;
-  box-shadow: 0.8rem 0.8rem 0.8rem 0 rgba(5, 5, 11, 0.2);
+  box-shadow: 0.8rem 0.8rem 0.8rem 0 var(--shadow-theme);
 }
 
 .others li {
@@ -505,7 +509,6 @@ dialog button {
 .others h6 {
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
-  font-weight: 600;
   color: var(--main-theme);
   margin-bottom: 0.2rem;
 }
