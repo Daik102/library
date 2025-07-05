@@ -81,7 +81,7 @@ button {
 
 .header ul:last-child {
   display: grid;
-  grid-template-columns: 3rem 1fr 12rem 14rem;
+  grid-template-columns: 3rem 1fr 10rem 14rem;
   gap: 2rem;
   align-items: center;
 }
@@ -150,7 +150,7 @@ button {
 }
 
 .sort-btn {
-  width: 12rem;
+  width: 10rem;
   background-color: var(--button-theme-lightgreen);
 }
 
