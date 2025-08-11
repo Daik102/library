@@ -28,8 +28,11 @@
   --accent-theme: #254a54;
   --paragraph-theme: #444;
   --white-theme: #f2fcff;
+  --pure-white-theme: #fff;
+  --orange-theme: #ffa500;
   --modal-theme: rgba(35, 64, 68, 0.65);
   --shadow-theme: rgba(5, 5, 11, 0.2);
+  --transparent-theme: #0000;
 }
 
 body {
@@ -216,34 +219,38 @@ dialog h2 {
 }
 
 .alert {
-  display: none;
+  visibility: hidden;
+  display: flex;
+  gap: 0.8rem;
   position: absolute;
-  width: 24.4rem;
   margin: -10.4rem 12rem;
-  padding: 0.8rem 1rem;
-  font-size: 1.8rem;
-  background-color: #fff;
+  padding: 0.8rem 1.2rem;
+  background-color: var(--pure-white-theme);
   border-radius: 0.4rem;
 }
 
 .alert::before {
   content: '';
   position: absolute;
-  top: 4rem;
+  top: 3.8rem;
   left: 4.8rem;
   width: 2rem;
   height: 1.4rem;
-  background-color: #fff;
+  background-color: var(--pure-white-theme);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
 .alert svg {
   width: 2.4rem;
-  fill: orange;
+  fill: var(--orange-theme);
+}
+
+.alert-message {
+  font-size: 1.8rem;
 }
 
 .on-alert {
-  display: flex;
+  visibility: visible;
 }
 
 dialog p {
@@ -412,7 +419,7 @@ dialog button {
 
 .rating-btn {
   font-size: 2.2rem;
-  background-color: #0000;
+  background-color: var(--transparent-theme);
   color: var(--button-hover-theme-red);
   border: none;
 }
@@ -432,7 +439,7 @@ dialog button {
 .cross-btn {
   padding:0.2rem 0.6rem;
   font-size: 2.2rem;
-  background-color: #0000;
+  background-color: var(--transparent-theme);
   border: none;
 }
 
@@ -443,7 +450,7 @@ dialog button {
   height: 30rem;
   border-radius: 0.8rem;
   background-color: var(--item-theme);
-  box-shadow: 0.8rem 0.8rem 0.8rem 0 rgba(5, 5, 11, 0.2);
+  box-shadow: 0.8rem 0.8rem 0.8rem 0 var(--shadow-theme);
 }
 
 .recommendations li {

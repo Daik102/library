@@ -9,17 +9,11 @@ class Book {
   }
 }
 
-const androids = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
-const client = new Book('The Client', 'John Grisham', '422', '4');
-const nineteen = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
-const charlie = new Book('Charlie and the Chocolate Factory', 'Roald Dahl', '155', '4');
-const dragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
-const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
-
 const bookshelf = document.querySelector('.bookshelf');
 const sortBtn = document.querySelector('.sort-btn');
 const newBookBtn = document.querySelector('.new-book-btn');
 const cancelBtns = document.querySelectorAll('.cancel-btn');
+const editBtn = document.querySelector('.edit-btn');
 const recommendedBooks = document.querySelectorAll('.recommended-book');
 const users = document.querySelectorAll('.user');
 
@@ -33,7 +27,6 @@ let index;
 
 let sortBtnClicked;
 let NewBookBtnClicked;
-let titleClicked;
 let ratingBtnClicked;
 let crossBtnClicked;
 let recommendedBookClicked;
@@ -41,8 +34,6 @@ let recommendedBookClicked;
 function addBookToLibrary(...rest) {
   myLibrary.push(...rest);
 }
-
-addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
 
 function searchBooks(e) {
   const searchBar = document.querySelector('.search-bar');
@@ -56,15 +47,18 @@ function searchBooks(e) {
         searchArray.push(book);
       }
     });
+
     searchBar.value = '';
 
     if (!searchArray[0]) {
       bookshelf.innerHTML = `No books were found.<br><br>You can go back with sort button.`;
       return;
     }
+
     renderLibrary();
   }
 }
+
 document.body.addEventListener('keydown', searchBooks);
 
 function closeModal(e) {
@@ -80,6 +74,7 @@ function closeModal(e) {
     }
   });
 }
+
 cancelBtns.forEach((btn) => btn.addEventListener('click', closeModal));
 
 function sortBooks(e) {
@@ -96,6 +91,7 @@ function sortBooks(e) {
   if (sortBtnClicked) {
     return;
   }
+
   sortBtnClicked = true;
 
   oldestBtn.addEventListener('click', (e) => {
@@ -126,7 +122,26 @@ function sortBooks(e) {
     dialogSort.close();
   });
 }
+
 sortBtn.addEventListener('click', sortBooks);
+
+function removeOnAlert() {
+  const alertNoTitle = document.querySelector('.alert-no-title');
+  const alertNoAuthor = document.querySelector('.alert-no-author');
+  const alertNoPages = document.querySelector('.alert-no-pages');
+
+  if (alertNoTitle.classList.contains('on-alert')) {
+    alertNoTitle.classList.remove('on-alert');
+  }
+
+  if (alertNoAuthor.classList.contains('on-alert')) {
+    alertNoAuthor.classList.remove('on-alert');
+  }
+
+  if (alertNoPages.classList.contains('on-alert')) {
+    alertNoPages.classList.remove('on-alert');
+  }
+}
 
 function generateNewBook(e) {
   e.preventDefault();
@@ -138,6 +153,8 @@ function generateNewBook(e) {
   let inputAuthor = document.getElementById('author');
   let inputPages = document.getElementById('pages');
 
+  removeOnAlert();
+
   inputTitle.value = '';
   inputAuthor.value = '';
   inputPages.value = '';
@@ -148,6 +165,7 @@ function generateNewBook(e) {
   if (NewBookBtnClicked) {
     return;
   }
+
   NewBookBtnClicked = true;
 
   const addNewBook = (e) => {
@@ -156,22 +174,11 @@ function generateNewBook(e) {
     const alertNoTitle = document.querySelector('.alert-no-title');
     const alertNoAuthor = document.querySelector('.alert-no-author');
     const alertNoPages = document.querySelector('.alert-no-pages');
+    const alertMessagePages = document.querySelector('.alert-message-pages');
     const title = inputTitle.value;
     const author = inputAuthor.value;
     const pages = inputPages.value;
     const rating = ratingNewBook.value;
-
-    const removeOnAlert = () => {
-      if (alertNoTitle.classList.contains('on-alert')) {
-        alertNoTitle.classList.remove('on-alert');
-      }
-      if (alertNoAuthor.classList.contains('on-alert')) {
-        alertNoAuthor.classList.remove('on-alert');
-      }
-      if (alertNoPages.classList.contains('on-alert')) {
-        alertNoPages.classList.remove('on-alert');
-      }
-    }
 
     removeOnAlert();
 
@@ -183,16 +190,25 @@ function generateNewBook(e) {
       return;
     } else if (pages === '') {
       alertNoPages.classList.add('on-alert');
+      alertMessagePages.textContent = '';
+      alertMessagePages.textContent = 'Please fill out this field';
+      return;
+    } else if (inputPages.validity.rangeUnderflow) {
+      alertNoPages.classList.add('on-alert');
+      alertMessagePages.textContent = '';
+      alertMessagePages.textContent = 'Pages need to have at least 1 page';
       return;
     }
 
     const newBook = new Book(title, author, pages, rating);
     addBookToLibrary(newBook);
     renderLibrary();
-    dialogAdd.close();
+    closeModal(e);
   }
+
   addBtn.addEventListener('click', addNewBook);
 }
+
 newBookBtn.addEventListener('click', generateNewBook);
 
 function generateRecommendedBook() {
@@ -204,6 +220,7 @@ function generateRecommendedBook() {
   if (recommendedBookClicked) {
     return;
   }
+
   recommendedBookClicked = true;
 
   const addRecommendedBook = (e) => {
@@ -223,8 +240,10 @@ function generateRecommendedBook() {
     renderLibrary();
     dialogRecommendation.close();
   };
+
   addBtnForRecommendation.addEventListener('click', addRecommendedBook);
 }
+
 recommendedBooks.forEach((book, i) => {
   book.addEventListener('click', () => {
     index = i;
@@ -237,7 +256,59 @@ function showOtherBookshelves() {
   
   dialogOthers.showModal();
 }
+
 users.forEach(user => user.addEventListener('click', showOtherBookshelves));
+
+function editBook(e) {
+  const editTitle = document.getElementById('edit-title');
+  const editAuthor = document.getElementById('edit-author');
+  const editPages = document.getElementById('edit-pages');
+  const dialogEdit = document.querySelector('.dialog-edit');
+
+  editTitle.addEventListener('keydown', () => {
+    editTitle.setCustomValidity('');
+  });
+
+  editAuthor.addEventListener('keydown', () => {
+    editAuthor.setCustomValidity('');
+  });
+
+  editPages.addEventListener('keydown', () => {
+    editPages.setCustomValidity('');
+  });
+
+  if (editTitle.validity.valueMissing) {
+    editTitle.setCustomValidity('Please fill out this field.');
+    return;
+  } else if (editAuthor.validity.valueMissing) {
+    editTitle.setCustomValidity('');
+    editAuthor.setCustomValidity('Please fill out this field.');
+    return;
+  } else if (editPages.validity.valueMissing) {
+    editTitle.setCustomValidity('');
+    editAuthor.setCustomValidity('');
+    editPages.setCustomValidity('Please fill out this field.');
+    return;
+  } else if (editPages.validity.rangeUnderflow) {
+    editTitle.setCustomValidity('');
+    editAuthor.setCustomValidity('');
+    editPages.setCustomValidity('Value must be greater than or equal to 1.');
+    return;
+  }
+
+  e.preventDefault();
+  
+  myLibrary.forEach((book) => {
+    if (book.id === itemId) {
+      book.title = editTitle.value;
+      book.author = editAuthor.value;
+      book.pages = editPages.value;
+    }
+  });
+  
+  renderLibrary();
+  dialogEdit.close();
+};
 
 function createBooks(book) {
   const item = document.createElement('li');
@@ -252,7 +323,6 @@ function createBooks(book) {
   const editAuthor = document.getElementById('edit-author');
   const editPages = document.getElementById('edit-pages');
   const dialogEdit = document.querySelector('.dialog-edit');
-  const editBtn = document.querySelector('.edit-btn');
   const ratingOldBook = document.getElementById('rating-old-book');
   const dialogRating = document.querySelector('.dialog-rating');
   const confirmBtn = document.querySelector('.confirm-btn');
@@ -313,29 +383,11 @@ function createBooks(book) {
     }
 
     dialogEdit.showModal();
-
-    if (titleClicked) {
-      return;
-    }
-    titleClicked = true;
-
-    const editBook = (e) => {
-      e.preventDefault();
-      
-      myLibrary.forEach((book) => {
-        if (book.id === itemId) {
-          book.title = editTitle.value;
-          book.author = editAuthor.value;
-          book.pages = editPages.value;
-        }
-      });
-      
-      renderLibrary();
-      dialogEdit.close();
-    };
-    editBtn.addEventListener('click', editBook);
   };
+
   title.addEventListener('click', showEditModal);
+
+  editBtn.addEventListener('click', editBook);
 
   const editRating = (e) => {
     itemId = e.target.parentNode.parentNode.dataset.id;
@@ -357,11 +409,13 @@ function createBooks(book) {
         }
       }
     });
+
     dialogRating.showModal();
 
     if (ratingBtnClicked) {
       return;
     }
+
     ratingBtnClicked = true;
 
     const confirmRating = (e) => {
@@ -374,11 +428,14 @@ function createBooks(book) {
           book.rating = rating;
         }
       });
+
       renderLibrary();
       dialogRating.close();
     };
+
     confirmBtn.addEventListener('click', confirmRating);
   }
+
   ratingBtn.addEventListener('click', editRating);
 
   crossBtn.addEventListener('click', (e) => {
@@ -388,6 +445,7 @@ function createBooks(book) {
     if (crossBtnClicked) {
       return;
     }
+
     crossBtnClicked = true;
 
     const deleteBook = (e) => {
@@ -402,6 +460,7 @@ function createBooks(book) {
       renderLibrary();
       dialogDelete.close();
     };
+
     deleteBtn.addEventListener('click', deleteBook);
   });
 }
@@ -413,22 +472,34 @@ function renderLibrary() {
     searchArray.forEach((book) => {
       createBooks(book);
     });
+
     searchArray = [];
   } else if (highestArray[0]) {
     highestArray.forEach((book) => {
       createBooks(book);
     });
+
     highestArray = [];
   } else if (lowestArray[0]) {
     lowestArray.forEach((book) => {
       createBooks(book);
     });
+
     lowestArray = [];
   } else {
     myLibrary.forEach((book) => {
       createBooks(book);
     });
-  } 
+  }
 }
+
+const androids = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
+const client = new Book('The Client', 'John Grisham', '422', '4');
+const nineteen = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
+const charlie = new Book('Charlie and the Chocolate Factory', 'Roald Dahl', '155', '4');
+const dragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
+const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
+
+addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
 
 renderLibrary();
