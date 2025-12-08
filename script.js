@@ -43,6 +43,7 @@ function searchBooks(e) {
       const titleWithLowerCase = book.title.toLowerCase();
       const authorWithLowerCase = book.author.toLowerCase();
       const searchWord = searchBar.value.toLowerCase();
+
       if (titleWithLowerCase.includes(searchWord) || authorWithLowerCase.includes(searchWord)) {
         searchArray.push(book);
       }
@@ -51,8 +52,7 @@ function searchBooks(e) {
     searchBar.value = '';
 
     if (!searchArray[0]) {
-      bookshelf.innerHTML = `No books were found.<br><br>You can go back with sort button.`;
-      return;
+      return bookshelf.innerHTML = `No books were found.<br><br>You can go back with sort button.`;
     }
 
     renderLibrary();
@@ -63,7 +63,6 @@ document.body.addEventListener('keydown', searchBooks);
 
 function closeModal(e) {
   e.preventDefault();
-
   const dialogs = document.querySelectorAll('dialog');
 
   dialogs.forEach((modal) => {
@@ -87,11 +86,7 @@ function sortBooks(e) {
   const lowRatingsBtn = document.querySelector('.low-ratings-btn');
 
   dialogSort.showModal();
-
-  if (sortBtnClicked) {
-    return;
-  }
-
+  if (sortBtnClicked) return;
   sortBtnClicked = true;
 
   oldestBtn.addEventListener('click', (e) => {
@@ -161,11 +156,7 @@ function generateNewBook(e) {
   ratingNewBook.options[0].selected = true;
 
   dialogAdd.showModal();
-
-  if (NewBookBtnClicked) {
-    return;
-  }
-
+  if (NewBookBtnClicked) return;
   NewBookBtnClicked = true;
 
   const addNewBook = (e) => {
@@ -216,11 +207,7 @@ function generateRecommendedBook() {
   const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
 
   dialogRecommendation.showModal();
-
-  if (recommendedBookClicked) {
-    return;
-  }
-
+  if (recommendedBookClicked) return;
   recommendedBookClicked = true;
 
   const addRecommendedBook = (e) => {
@@ -253,7 +240,6 @@ recommendedBooks.forEach((book, i) => {
 
 function showOtherBookshelves() {
   const dialogOthers = document.querySelector('.dialog-others');
-  
   dialogOthers.showModal();
 }
 
@@ -386,7 +372,6 @@ function createBooks(book) {
   };
 
   title.addEventListener('click', showEditModal);
-
   editBtn.addEventListener('click', editBook);
 
   const editRating = (e) => {
@@ -411,11 +396,7 @@ function createBooks(book) {
     });
 
     dialogRating.showModal();
-
-    if (ratingBtnClicked) {
-      return;
-    }
-
+    if (ratingBtnClicked) return;
     ratingBtnClicked = true;
 
     const confirmRating = (e) => {
@@ -442,10 +423,7 @@ function createBooks(book) {
     itemId = e.target.parentNode.parentNode.dataset.id;
     dialogDelete.showModal();
 
-    if (crossBtnClicked) {
-      return;
-    }
-
+    if (crossBtnClicked) return;
     crossBtnClicked = true;
 
     const deleteBook = (e) => {
@@ -501,5 +479,4 @@ const dragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0')
 const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
 
 addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
-
 renderLibrary();
