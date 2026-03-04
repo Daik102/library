@@ -9,474 +9,396 @@ class Book {
   }
 }
 
-const bookshelf = document.querySelector('.bookshelf');
-const sortBtn = document.querySelector('.sort-btn');
-const newBookBtn = document.querySelector('.new-book-btn');
-const cancelBtns = document.querySelectorAll('.cancel-btn');
-const editBtn = document.querySelector('.edit-btn');
-const recommendedBooks = document.querySelectorAll('.recommended-book');
-const users = document.querySelectorAll('.user');
-
-const myLibrary = [];
-let searchArray = [];
-let highestArray = [];
-let lowestArray = [];
-
-let itemId;
-let index;
-
-let sortBtnClicked;
-let NewBookBtnClicked;
-let ratingBtnClicked;
-let crossBtnClicked;
-let recommendedBookClicked;
-
 function addBookToLibrary(...rest) {
   myLibrary.push(...rest);
 }
 
 function searchBooks(e) {
-  const searchBar = document.querySelector('.search-bar');
+  const customIndex = [];
 
   if (e.key === 'Enter' && searchBar.value) {
-    myLibrary.forEach((book) => {
-      const titleWithLowerCase = book.title.toLowerCase();
-      const authorWithLowerCase = book.author.toLowerCase();
+    e.preventDefault();
+
+    for (let i = 0; i < myLibrary.length; i++) {
+      const book = myLibrary[i];
+      const title = book.title.toLowerCase();
+      const author = book.author.toLowerCase();
       const searchWord = searchBar.value.toLowerCase();
 
-      if (titleWithLowerCase.includes(searchWord) || authorWithLowerCase.includes(searchWord)) {
-        searchArray.push(book);
+      if (title.includes(searchWord) || author.includes(searchWord)) {
+        customIndex.push(i);
       }
-    });
+    }
 
     searchBar.value = '';
 
-    if (!searchArray[0]) {
-      return bookshelf.innerHTML = `No books were found.<br><br>You can go back with sort button.`;
+    if (customIndex.length === 0) {
+      const dialogNoBooks = document.querySelector('.dialog-no-books');
+      dialogNoBooks.showModal();
+    } else {
+      renderLibrary('', '', customIndex);
     }
-
-    renderLibrary();
   }
 }
-
-document.body.addEventListener('keydown', searchBooks);
 
 function closeModal(e) {
-  e.preventDefault();
   const dialogs = document.querySelectorAll('dialog');
-
-  dialogs.forEach((modal) => {
-    const dialog = e.target.parentNode.parentNode.parentNode;
-
+  
+  dialogs.forEach((dialog) => {
+    let modal = e.target.parentNode.parentNode.parentNode;
+    
+    if (e.target.textContent === 'Back') {
+      modal = e.target.parentNode.parentNode;
+    }
+    
     if (dialog.className === modal.className) {
-      modal.close();
+      dialog.close();
+      inputTitle.value = '';
+      inputAuthor.value = '';
+      inputPages.value = '';
+      selectRating.options[0].selected = true;
     }
   });
 }
-
-cancelBtns.forEach((btn) => btn.addEventListener('click', closeModal));
 
 function sortBooks(e) {
-  e.preventDefault();
+  const target = e.target;
+  let customLibrary = myLibrary;
 
-  const dialogSort = document.querySelector('.dialog-sort');
-  const oldestBtn = document.querySelector('.oldest-btn');
-  const newestBtn = document.querySelector('.newest-btn');
-  const highRatingsBtn = document.querySelector('.high-ratings-btn');
-  const lowRatingsBtn = document.querySelector('.low-ratings-btn');
-
-  dialogSort.showModal();
-  if (sortBtnClicked) return;
-  sortBtnClicked = true;
-
-  oldestBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    renderLibrary();
-    dialogSort.close();
-  });
-
-  newestBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    myLibrary.reverse();
-    renderLibrary();
-    myLibrary.reverse();
-    dialogSort.close();
-  });
-
-  highRatingsBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    highestArray = myLibrary.toSorted((a, b) => b.rating - a.rating);
-    renderLibrary();
-    dialogSort.close();
-  });
-
-  lowRatingsBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    lowestArray = myLibrary.toSorted((a, b) => a.rating - b.rating);
-    renderLibrary();
-    dialogSort.close();
-  });
+  if (target.classList.contains('newest-btn')) {
+    customLibrary = myLibrary.toReversed();
+  } else if (target.classList.contains('high-ratings-btn')) {
+    customLibrary = myLibrary.toSorted((a, b) => b.rating - a.rating);
+  } else if (target.classList.contains('low-ratings-btn')) {
+    customLibrary = myLibrary.toSorted((a, b) => a.rating - b.rating);
+  }
+  
+  renderLibrary(e, customLibrary);
 }
 
-sortBtn.addEventListener('click', sortBooks);
-
-function removeOnAlert() {
-  const alertNoTitle = document.querySelector('.alert-no-title');
-  const alertNoAuthor = document.querySelector('.alert-no-author');
-  const alertNoPages = document.querySelector('.alert-no-pages');
-
-  if (alertNoTitle.classList.contains('on-alert')) {
-    alertNoTitle.classList.remove('on-alert');
+function addNewBook(e) {
+  if (inputTitle.validity.valueMissing) {
+    inputTitle.reportValidity();
+    return;
+  } else if (inputAuthor.validity.valueMissing) {
+    inputAuthor.reportValidity();
+    return;
+  } else if (inputPages.validity.valueMissing) {
+    inputPages.reportValidity();
+    return;
+  } else if (inputPages.validity.rangeUnderflow) {
+    inputPages.reportValidity();
+    return;
   }
 
-  if (alertNoAuthor.classList.contains('on-alert')) {
-    alertNoAuthor.classList.remove('on-alert');
-  }
-
-  if (alertNoPages.classList.contains('on-alert')) {
-    alertNoPages.classList.remove('on-alert');
-  }
+  const title = inputTitle.value;
+  const author = inputAuthor.value;
+  const pages = inputPages.value;
+  const rating = selectRating.value;
+  const newBook = new Book(title, author, pages, rating);
+  addBookToLibrary(newBook);
+  renderLibrary(e);
 }
 
-function generateNewBook(e) {
-  e.preventDefault();
-
-  const dialogAdd = document.querySelector('.dialog-add');
-  const addBtn = document.querySelector('.add-btn');
-  const ratingNewBook = document.getElementById('rating-new-book');
-  let inputTitle = document.getElementById('title');
-  let inputAuthor = document.getElementById('author');
-  let inputPages = document.getElementById('pages');
-
-  removeOnAlert();
-
-  inputTitle.value = '';
-  inputAuthor.value = '';
-  inputPages.value = '';
-  ratingNewBook.options[0].selected = true;
-
-  dialogAdd.showModal();
-  if (NewBookBtnClicked) return;
-  NewBookBtnClicked = true;
-
-  const addNewBook = (e) => {
+function showEditModal(e, book) {
+  if (e.key === 'Enter') {
     e.preventDefault();
-
-    const alertNoTitle = document.querySelector('.alert-no-title');
-    const alertNoAuthor = document.querySelector('.alert-no-author');
-    const alertNoPages = document.querySelector('.alert-no-pages');
-    const alertMessagePages = document.querySelector('.alert-message-pages');
-    const title = inputTitle.value;
-    const author = inputAuthor.value;
-    const pages = inputPages.value;
-    const rating = ratingNewBook.value;
-
-    removeOnAlert();
-
-    if (title === '') {
-      alertNoTitle.classList.add('on-alert');
-      return;
-    } else if (author === '') {
-      alertNoAuthor.classList.add('on-alert');
-      return;
-    } else if (pages === '') {
-      alertNoPages.classList.add('on-alert');
-      alertMessagePages.textContent = '';
-      alertMessagePages.textContent = 'Please fill out this field';
-      return;
-    } else if (inputPages.validity.rangeUnderflow) {
-      alertNoPages.classList.add('on-alert');
-      alertMessagePages.textContent = '';
-      alertMessagePages.textContent = 'Pages need to have at least 1 page';
+  } else if (e instanceof KeyboardEvent) {
+    if (e.key !== ' ') {
       return;
     }
-
-    const newBook = new Book(title, author, pages, rating);
-    addBookToLibrary(newBook);
-    renderLibrary();
-    closeModal(e);
   }
 
-  addBtn.addEventListener('click', addNewBook);
-}
+  if (e.target.classList.contains('cross-btn')) {
+    return;
+  }
 
-newBookBtn.addEventListener('click', generateNewBook);
+  itemId = e.target.parentNode.dataset.id;
 
-function generateRecommendedBook() {
-  const dialogRecommendation = document.querySelector('.dialog-recommendation');
-  const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
+  if (e.target.classList.contains('book')) {
+    itemId = e.target.dataset.id;
+  } else if (e.target.classList.contains('rating')) {
+    itemId = e.target.parentNode.parentNode.dataset.id;
+  }
+  
+  if (book.id === itemId) {
+    editTitle.value = book.title;
+    editAuthor.value = book.author;
+    editPages.value = book.pages;
 
-  dialogRecommendation.showModal();
-  if (recommendedBookClicked) return;
-  recommendedBookClicked = true;
-
-  const addRecommendedBook = (e) => {
-    e.preventDefault();
-    
-    if (index === 0) {
-      const newBook = new Book('The Long Good-bye', 'Raymond Chandler', '320', '0');
-      addBookToLibrary(newBook);
-    } else if (index === 1) {
-      const newBook = new Book('Flowers for Algernon', 'Daniel Keyes', '311', '0');
-      addBookToLibrary(newBook);
-    } else if (index === 2) {
-      const newBook = new Book('Moon Palace', 'Paul Auster', '320', '0');
-      addBookToLibrary(newBook);
+    switch (book.rating) {
+      case '5':
+        editRating.options[1].selected = true;
+        break;
+      case '4':
+        editRating.options[2].selected = true;
+        break;
+      case '3':
+        editRating.options[3].selected = true;
+        break;
+      case '2':
+        editRating.options[4].selected = true;
+        break;
+      case '1':
+        editRating.options[5].selected = true;
+        break;
+      default:
+      editRating.options[0].selected = true;
     }
-    
-    renderLibrary();
-    dialogRecommendation.close();
-  };
+  }
 
-  addBtnForRecommendation.addEventListener('click', addRecommendedBook);
+  const dialogEdit = document.querySelector('.dialog-edit');
+  dialogEdit.showModal();
 }
-
-recommendedBooks.forEach((book, i) => {
-  book.addEventListener('click', () => {
-    index = i;
-    generateRecommendedBook();
-  });
-});
-
-function showOtherBookshelves() {
-  const dialogOthers = document.querySelector('.dialog-others');
-  dialogOthers.showModal();
-}
-
-users.forEach(user => user.addEventListener('click', showOtherBookshelves));
 
 function editBook(e) {
-  const editTitle = document.getElementById('edit-title');
-  const editAuthor = document.getElementById('edit-author');
-  const editPages = document.getElementById('edit-pages');
-  const dialogEdit = document.querySelector('.dialog-edit');
-
-  editTitle.addEventListener('keydown', () => {
-    editTitle.setCustomValidity('');
-  });
-
-  editAuthor.addEventListener('keydown', () => {
-    editAuthor.setCustomValidity('');
-  });
-
-  editPages.addEventListener('keydown', () => {
-    editPages.setCustomValidity('');
-  });
-
   if (editTitle.validity.valueMissing) {
-    editTitle.setCustomValidity('Please fill out this field.');
+    editTitle.reportValidity();
     return;
   } else if (editAuthor.validity.valueMissing) {
-    editTitle.setCustomValidity('');
-    editAuthor.setCustomValidity('Please fill out this field.');
+    editAuthor.reportValidity();
     return;
   } else if (editPages.validity.valueMissing) {
-    editTitle.setCustomValidity('');
-    editAuthor.setCustomValidity('');
-    editPages.setCustomValidity('Please fill out this field.');
+    editPages.reportValidity();
     return;
   } else if (editPages.validity.rangeUnderflow) {
-    editTitle.setCustomValidity('');
-    editAuthor.setCustomValidity('');
-    editPages.setCustomValidity('Value must be greater than or equal to 1.');
+    editPages.reportValidity();
     return;
   }
-
-  e.preventDefault();
   
-  myLibrary.forEach((book) => {
+  for (let i = 0; i < myLibrary.length; i++) {
+    const book = myLibrary[i];
+
     if (book.id === itemId) {
       book.title = editTitle.value;
       book.author = editAuthor.value;
       book.pages = editPages.value;
+      book.rating = editRating.value;
+      renderLibrary(e);
+      return;
     }
-  });
-  
-  renderLibrary();
-  dialogEdit.close();
+  }
 };
+
+function showDeleteModal(e) {
+  if (e instanceof KeyboardEvent) {
+    if (e.key !== 'Enter') {
+      return;
+    }
+  }
+
+  const dialogDelete = document.querySelector('.dialog-delete');
+  dialogDelete.showModal();
+  itemId = e.target.parentNode.parentNode.dataset.id;
+}
+
+function deleteBook(e) {
+  for (let i = 0; i < myLibrary.length; i++) {
+    const book = myLibrary[i];
+
+    if (book.id === itemId) {
+      myLibrary.splice(i, 1);
+      renderLibrary(e);
+      return;
+    }
+  }
+}
+
+function showRecommendationModal(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+  } else if (e instanceof KeyboardEvent) {
+    if (e.key !== ' ') {
+      return;
+    }
+  }
+  
+  let target = e.target;
+  
+  if (!e.target.classList.contains('recommended-book')) {
+    target = e.target.parentNode;
+  }
+  
+  if (target.classList.contains('first-rec')) {
+    index = 0;
+  } else if (target.classList.contains('second-rec')) {
+    index = 1;
+  } else if (target.classList.contains('third-rec')) {
+    index = 2;
+  }
+  
+  const dialogRecommendation = document.querySelector('.dialog-recommendation');
+  dialogRecommendation.showModal();
+}
+
+function addRecommendedBook(e) {
+  let newBook = {};
+
+  if (index === 0) {
+    newBook = new Book('The Long Good-bye', 'Raymond Chandler', '320', '0');
+  } else if (index === 1) {
+    newBook = new Book('Flowers for Algernon', 'Daniel Keyes', '311', '0');
+  } else if (index === 2) {
+    newBook = new Book('Moon Palace', 'Paul Auster', '320', '0');
+  }
+  
+  addBookToLibrary(newBook);
+  renderLibrary(e);
+}
+
+function showUserListModal(e) {
+  if (e instanceof KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    } else if (e.key !== ' ') {
+      return;
+    }
+  }
+
+  const dialogUserList = document.querySelector('.dialog-user-list');
+  dialogUserList.showModal();
+}
 
 function createBooks(book) {
   const item = document.createElement('li');
   const title = document.createElement('h4');
   const author = document.createElement('p');
   const pages = document.createElement('p');
-  const btnContainer = document.createElement('p');
-  const ratingBtn = document.createElement('button');
+  const btnContainer = document.createElement('div');
+  const rating = document.createElement('div');
   const crossBtn = document.createElement('button');
 
-  const editTitle = document.getElementById('edit-title');
-  const editAuthor = document.getElementById('edit-author');
-  const editPages = document.getElementById('edit-pages');
-  const dialogEdit = document.querySelector('.dialog-edit');
-  const ratingOldBook = document.getElementById('rating-old-book');
-  const dialogRating = document.querySelector('.dialog-rating');
-  const confirmBtn = document.querySelector('.confirm-btn');
-  const dialogDelete = document.querySelector('.dialog-delete');
-  const deleteBtn = document.querySelector('.delete-btn');
-  
-  item.setAttribute('data-id', `${book.id}`);
+  item.classList.add('book');
+  item.dataset.id = book.id;
+  item.setAttribute('tabindex', '0');
+  title.classList.add('book-title');
   title.textContent = book.title;
   author.textContent = book.author;
   pages.textContent = book.pages + ' pages';
-  btnContainer.classList = 'btn-container';
-  ratingBtn.classList = 'rating-btn';
+  btnContainer.classList.add('btn-container');
+  rating.classList.add('rating');
   
-  if (book.rating === '0') {
-    ratingBtn.classList.add('not-read-yet');
-  }
-  
-  if (book.rating === '5') {
-    ratingBtn.innerHTML = '&#9733;&#9733;&#9733;&#9733;&#9733;';
-  } else if (book.rating === '4') {
-    ratingBtn.innerHTML = '&#9733;&#9733;&#9733;&#9733;'
-  } else if (book.rating === '3') {
-    ratingBtn.innerHTML = '&#9733;&#9733;&#9733;'
-  } else if (book.rating === '2') {
-    ratingBtn.innerHTML = '&#9733;&#9733;'
-  } else if (book.rating === '1') {
-    ratingBtn.innerHTML = '&#9733;'
-  } else {
-    ratingBtn.textContent = 'Not read yet';
+  switch (book.rating) {
+    case '5':
+      rating.innerHTML = '&#9733;&#9733;&#9733;&#9733;&#9733;';
+      break;
+    case '4':
+      rating.innerHTML = '&#9733;&#9733;&#9733;&#9733;';
+      break;
+    case '3':
+      rating.innerHTML = '&#9733;&#9733;&#9733;';
+      break;
+    case '2':
+      rating.innerHTML = '&#9733;&#9733;';
+      break;
+    case '1':
+      rating.innerHTML = '&#9733;';
+      break;
+    default:
+    rating.classList.add('not-read-yet');
+    rating.textContent = 'Not read yet';
   }
 
-  crossBtn.classList = 'cross-btn';
+  crossBtn.classList.add('cross-btn');
   crossBtn.innerHTML = '&#10005;';
 
   item.appendChild(title);
   item.appendChild(author);
   item.appendChild(pages);
-  btnContainer.appendChild(ratingBtn);
+  btnContainer.appendChild(rating);
   btnContainer.appendChild(crossBtn);
   item.appendChild(btnContainer);
   bookshelf.appendChild(item);
+  
+  const books = document.querySelectorAll('.book');
 
-  if (book.rating === '0') {
-    item.classList.add('not-read-notice'); 
-  } else {
-    if (item.classList === 'not-read-notice') {
-      item.classList.remove('not-read-notice');
-    }
-  }
-
-  const showEditModal = (e) => {
-    itemId = e.target.parentNode.dataset.id;
-    
-    if (book.id === itemId) {
-      editTitle.value = book.title;
-      editAuthor.value = book.author;
-      editPages.value = book.pages;
-    }
-
-    dialogEdit.showModal();
-  };
-
-  title.addEventListener('click', showEditModal);
-  editBtn.addEventListener('click', editBook);
-
-  const editRating = (e) => {
-    itemId = e.target.parentNode.parentNode.dataset.id;
-
-    myLibrary.forEach((book) => {
-      if (book.id === itemId) {
-        if (book.rating === '5') {
-          ratingOldBook.options[1].selected = true;
-        } else if (book.rating === '4') {
-          ratingOldBook.options[2].selected = true;
-        } else if (book.rating === '3') {
-          ratingOldBook.options[3].selected = true;
-        } else if (book.rating === '2') {
-          ratingOldBook.options[4].selected = true;
-        } else if (book.rating === '1') {
-          ratingOldBook.options[5].selected = true;
-        } else {
-          ratingOldBook.options[0].selected = true;
-        }
-      }
-    });
-
-    dialogRating.showModal();
-    if (ratingBtnClicked) return;
-    ratingBtnClicked = true;
-
-    const confirmRating = (e) => {
-      e.preventDefault();
-
-      const rating = ratingOldBook.value;
-      
-      myLibrary.forEach((book) => {
-        if (book.id === itemId) {
-          book.rating = rating;
-        }
-      });
-
-      renderLibrary();
-      dialogRating.close();
-    };
-
-    confirmBtn.addEventListener('click', confirmRating);
-  }
-
-  ratingBtn.addEventListener('click', editRating);
-
-  crossBtn.addEventListener('click', (e) => {
-    itemId = e.target.parentNode.parentNode.dataset.id;
-    dialogDelete.showModal();
-
-    if (crossBtnClicked) return;
-    crossBtnClicked = true;
-
-    const deleteBook = (e) => {
-      e.preventDefault();
-      
-      myLibrary.forEach((book, i) => {
-        if (book.id === itemId) {
-        myLibrary.splice(i, 1);
-        }
-      });
-
-      renderLibrary();
-      dialogDelete.close();
-    };
-
-    deleteBtn.addEventListener('click', deleteBook);
+  books.forEach((oneBook) => {
+    oneBook.addEventListener('click', (e) =>showEditModal(e, book));
+    oneBook.addEventListener('keydown', (e) => showEditModal(e, book));
   });
+
+  crossBtn.addEventListener('click', showDeleteModal);
+  crossBtn.addEventListener('keydown', showDeleteModal);
 }
 
-function renderLibrary() {
-  bookshelf.innerHTML = '';
-
-  if (searchArray[0]) {
-    searchArray.forEach((book) => {
-      createBooks(book);
-    });
-
-    searchArray = [];
-  } else if (highestArray[0]) {
-    highestArray.forEach((book) => {
-      createBooks(book);
-    });
-
-    highestArray = [];
-  } else if (lowestArray[0]) {
-    lowestArray.forEach((book) => {
-      createBooks(book);
-    });
-
-    lowestArray = [];
-  } else {
-    myLibrary.forEach((book) => {
-      createBooks(book);
-    });
+function renderLibrary(e, customLibrary, customIndex) {
+  if (e) {
+    closeModal(e);
   }
+
+  bookshelf.innerHTML = '';
+  let renderingLibrary = myLibrary;
+  
+  if (customLibrary) {
+    renderingLibrary = customLibrary;
+  } else if (customIndex) {
+    renderingLibrary = [];
+
+    for (const index of customIndex) {
+      renderingLibrary.push(myLibrary[index]);
+    }
+  }
+  
+  for (const book of renderingLibrary) {
+    createBooks(book);
+  }
+
+  saveLibrary();
 }
 
-const androids = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
-const client = new Book('The Client', 'John Grisham', '422', '4');
-const nineteen = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
-const charlie = new Book('Charlie and the Chocolate Factory', 'Roald Dahl', '155', '4');
-const dragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
-const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
+function saveLibrary() {
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
 
-addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
+const myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+let itemId = '';
+let index = 0;
+
+const bookshelf = document.querySelector('.bookshelf');
+const searchBar = document.querySelector('.search-bar');
+const cancelBtns = document.querySelectorAll('.cancel-btn');
+const inputTitle = document.getElementById('title');
+const inputAuthor = document.getElementById('author');
+const inputPages = document.getElementById('pages');
+const selectRating = document.getElementById('rating');
+const sortBtn = document.querySelector('.sort-btn');
+const sortOptionBtns = document.querySelectorAll('.sort-option-btn');
+const dialogSort = document.querySelector('.dialog-sort');
+const newBookBtn = document.querySelector('.new-book-btn');
+const dialogAdd = document.querySelector('.dialog-add');
+const addBtn = document.querySelector('.add-btn');
+const editTitle = document.getElementById('edit-title');
+const editAuthor = document.getElementById('edit-author');
+const editPages = document.getElementById('edit-pages');
+const editRating = document.getElementById('edit-rating');
+const editBtn = document.querySelector('.edit-btn');
+const deleteBtn = document.querySelector('.delete-btn');
+const recommendationList = document.querySelector('.recommendation-list');
+const addBtnForRecommendation = document.querySelector('.add-btn-for-recommendation');
+const userList = document.querySelector('.user-list');
+
+searchBar.addEventListener('keydown', searchBooks);
+cancelBtns.forEach((btn) => btn.addEventListener('click', closeModal));
+sortBtn.addEventListener('click', () => dialogSort.showModal());
+sortOptionBtns.forEach((btn) => btn.addEventListener('click', sortBooks)); 
+newBookBtn.addEventListener('click', () => dialogAdd.showModal());
+addBtn.addEventListener('click', addNewBook);
+editBtn.addEventListener('click', editBook);
+deleteBtn.addEventListener('click', deleteBook);
+recommendationList.addEventListener('click', showRecommendationModal);
+recommendationList.addEventListener('keydown', showRecommendationModal);
+addBtnForRecommendation.addEventListener('click', addRecommendedBook);
+userList.addEventListener('click', showUserListModal);
+userList.addEventListener('keydown', showUserListModal);
+// Some default items.
+if (myLibrary.length === 0) {
+  const androids = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
+  const client = new Book('The Client', 'John Grisham', '422', '4');
+  const nineteen = new Book('Nineteen Eighty-Four', 'George Orwell', '328', '5');
+  const charlie = new Book('Charlie and the Chocolate Factory', 'Roald Dahl', '155', '4');
+  const dragon = new Book('My Father\'s Dragon', 'Ruth Stiles Gannett', '98', '0');
+  const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
+  addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
+}
+// Initial rendering.
 renderLibrary();
