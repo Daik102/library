@@ -12,7 +12,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 10px;
   font-family: Play-Bold, Arial, Helvetica, sans-serif;
 }
 
@@ -20,19 +19,22 @@
   --main-theme: #234044;
   --sub-theme: #578184;
   --item-theme: #d4e9ed;
-  --button-theme: #ff3737;
+  --white-theme: #f2fcff;
+  --paragraph-theme: #444;
+  --rating-star-theme: #ff6969;
+  --not-rating-theme: #57a2a5;
+  --button-theme-red: #ff3737;
   --button-theme-lightgreen: #29d272;
   --button-hover-theme-red: #ff6969;
   --button-hover-theme-green: #57a2a5;
   --button-hover-theme-lightgreen: #2de97e;
-  --accent-theme: #254a54;
-  --paragraph-theme: #444;
-  --white-theme: #f2fcff;
-  --pure-white-theme: #fff;
-  --orange-theme: #ffa500;
   --modal-theme: rgba(35, 64, 68, 0.65);
   --shadow-theme: rgba(5, 5, 11, 0.2);
   --transparent-theme: #0000;
+}
+
+html {
+  font-size: 10px;
 }
 
 body {
@@ -51,148 +53,38 @@ button {
   border: none;
 }
 
+label,
 input,
 select,
-button {
+button,
+li {
   cursor: pointer;
 }
 
+input,
+select {
+  color: var(--main-theme);
+  background-color: var(--white-theme);
+}
+
 .container {
-  width: 100%;
   height: 100vh;
   background-color: var(--sub-theme);
 }
 
-.header {
-  display: grid;
-  align-items: center;
-  grid-template-rows: 6rem 6rem;
-  gap: 1.6rem;
-  height: 18rem;
-  border-bottom: 0.4rem dashed var(--white-theme);
-  padding: 2rem 4rem;
-  background-color: var(--main-theme);
-}
-
-.header ul:first-child {
-  display: grid;
-  grid-template-columns: 2.4rem 1fr 2.4rem 4.4rem 2.4rem;
-  gap: 2rem;
-  align-items: center;
-  margin: 0 3.2rem 0 0.2rem;
-}
-
-.header ul:last-child {
-  display: grid;
-  grid-template-columns: 3rem 1fr 10rem 14rem;
-  gap: 2rem;
-  align-items: center;
-}
-
-.icons {
-  width: 100%;
-  height: auto;
-  filter: invert(99%) sepia(57%) saturate(3148%) hue-rotate(180deg) brightness(107%) contrast(106%);
-  cursor: pointer;
-}
-
-.sub-photo {
-  width: 4.8rem;
-  height: 4.8rem;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: -1.8rem;
-  cursor: pointer;
-}
-
-.username {
-  font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--white-theme);
-}
-
-.header ul div {
-  max-width: 60rem;
-}
-
-.header input {
-  min-width: 44rem;
-  font-size: 1.8rem;
-  letter-spacing: 0.1rem;
-  border: none;
-  border-radius: 1.6rem;
-  padding: 0.4rem 1.6rem;
-  outline: none;
-  background-color: var(--item-theme);
-}
-
-.header input:focus {
-  background-color: var(--white-theme);
-}
-
-.header a:hover {
-  opacity: 0.8;
-}
-
-.header span {
-  color: var(--white-theme);
-  font-size: 2rem;
-}
-
-.header svg {
-  width: 3.2rem;
-  height: 3.2rem;
-  fill: var(--white-theme);
-} 
-
-.header p {
-  color: var(--white-theme);
-  font-size: 3.4rem;
-}
-
-.sort-btn,
-.new-book-btn {
-  height: 4rem;
-  padding: 0.2rem 0.4rem;
-  font-size: 1.8rem;
-  border-radius: 2rem;
-  color: var(--white-theme);
-}
-
-.sort-btn {
-  width: 10rem;
-  background-color: var(--button-theme-lightgreen);
-}
-
-.sort-btn:hover {
-  background-color: var(--button-hover-theme-lightgreen);
-}
-
-.new-book-btn {
-  width: 14rem;
-  background-color: var(--button-theme);
-}
-
-.new-book-btn:hover {
-  background-color: var(--button-hover-theme-red);
-}
-
 dialog {
   margin: auto;
-  width: 64rem;
-  padding: 2.4rem 2.4rem 2rem;
+  width: 56rem;
+  padding: 2.8rem 1.2rem 1.6rem;
+  color: var(--main-theme);
   background-color: var(--item-theme);
   border: none;
   border-radius: 0.8rem;
 }
 
-.dialog-rating {
-  height: 28rem;
-}
-
+.dialog-no-books form,
 .dialog-sort form,
-.dialog-others form {
+.dialog-user-list form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -201,75 +93,40 @@ dialog {
 
 .dialog-sort form {
   gap: 2.8rem;
-  padding: 2rem 0;
+  padding: 0.8rem 0;
 }
 
 ::backdrop {
   background-color: var(--modal-theme);
 }
 
-dialog h2 {
-  margin-bottom: 4rem;
-  font-size: 2.8rem;
+.title-of-dialog {
   text-align: center;
+  margin-bottom: 2.8rem;
+  font-size: 2.8rem;
 }
 
-.dialog-sort h2 {
+.dialog-sort .title-of-dialog {
   margin-bottom: 1.2rem;
-}
-
-.alert {
-  visibility: hidden;
-  display: flex;
-  gap: 0.8rem;
-  position: absolute;
-  margin: -10.4rem 12rem;
-  padding: 0.8rem 1.2rem;
-  background-color: var(--pure-white-theme);
-  border-radius: 0.4rem;
-}
-
-.alert::before {
-  content: '';
-  position: absolute;
-  top: 3.8rem;
-  left: 4.8rem;
-  width: 2rem;
-  height: 1.4rem;
-  background-color: var(--pure-white-theme);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-}
-
-.alert svg {
-  width: 2.4rem;
-  fill: var(--orange-theme);
-}
-
-.alert-message {
-  font-size: 1.8rem;
-}
-
-.on-alert {
-  visibility: visible;
 }
 
 dialog p {
   display: flex;
   justify-content: space-between;
-  padding: 0 2rem;
   margin-bottom: 1.6rem;
+  padding: 0 2rem;
 }
 
 dialog label {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
 }
 
 dialog input,
 dialog select,
 dialog option {
-  width: 44rem;
-  font-size: 2rem;
+  width: 40rem;
   padding: 0.4rem 1.2rem;
+  font-size: 2rem;
 }
 
 .dialog-sort .btn-container {
@@ -280,21 +137,15 @@ dialog option {
 
 .dialog-add .btn-container,
 .dialog-edit .btn-container {
-  margin-top: 4.4rem;
-}
-
-.dialog-rating .btn-container {
-  margin-top: 7.2rem;
+  margin-top: 3.6rem;
 }
 
 dialog button {
   width: 16rem;
-  height: 4rem;
-  padding: 0.2rem 0.4rem;
-  border: none;
-  border-radius: 2rem;
-  color: var(--white-theme);
+  padding: 0.8rem 0.4rem;
   font-size: 1.8rem;
+  color: var(--white-theme);
+  border-radius: 2rem;
 }
 
 .cancel-btn {
@@ -305,25 +156,12 @@ dialog button {
   background-color: var(--button-hover-theme-green);
 }
 
-.wide-btn {
-  width: 44rem;
-}
-
 .add-btn, 
 .confirm-btn,
 .delete-btn,
 .edit-btn,
 .add-btn-for-recommendation {
-  background-color: var(--button-theme);
-}
-
-.oldest-btn,
-.newest-btn,
-.high-ratings-btn,
-.low-ratings-btn {
-  display: block;
-  width: 44rem;
-  background-color: var(--button-theme-lightgreen);
+  background-color: var(--button-theme-red);
 }
 
 .add-btn:hover, 
@@ -334,11 +172,138 @@ dialog button {
   background-color: var(--button-hover-theme-red);
 }
 
-.oldest-btn:hover,
-.newest-btn:hover,
-.high-ratings-btn:hover,
-.low-ratings-btn:hover {
+.sort-option-btn,
+.wide-btn {
+  width: 44rem;
+}
+
+.sort-option-btn {
+  display: block;
+  background-color: var(--button-theme-lightgreen);
+}
+
+.sort-option-btn:hover {
   background-color: var(--button-hover-theme-lightgreen);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.8rem 4rem;
+  background-color: var(--main-theme);
+  border-bottom: 0.4rem dashed var(--white-theme);
+}
+
+.first-header-row,
+.second-header-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row-left,
+.row-right {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.row-left {
+  gap: 1.2rem;
+}
+
+.row-right {
+  gap: 1.6rem;
+}
+
+.icons {
+  width: 2.6rem;
+  height: 2.6rem;
+  filter: invert(99%) sepia(57%) saturate(3148%) hue-rotate(180deg) brightness(107%) contrast(106%);
+  cursor: pointer;
+}
+
+.search-bar {
+  width: 40rem;
+  padding: 0.6rem 1.8rem;
+  font-size: 1.8rem;
+  letter-spacing: 0.05rem;
+  background-color: var(--item-theme);
+  border: none;
+  border-radius: 1.6rem;
+}
+
+.search-bar::placeholder {
+  font-family: Roboto;
+}
+
+.search-bar:focus {
+  background-color: var(--white-theme);
+}
+
+.sub-photo {
+  width: 4.4rem;
+  height: 4.4rem;
+  object-fit: cover;
+  object-position: 65%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.current-account,
+.current-username {
+  color: var(--white-theme);
+}
+
+.current-account {
+  font-weight: 600;
+  font-size: 1.6rem;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.current-username {
+  font-size: 2rem;
+}
+
+.current-account:hover,
+.current-username:hover {
+  opacity: 0.8;
+}
+
+.header svg {
+  width: 3rem;
+  height: 3rem;
+  fill: var(--white-theme);
+}
+
+.main-title {
+  font-size: 3.2rem;
+  color: var(--white-theme);
+}
+
+.sort-btn,
+.new-book-btn {
+  font-size: 1.8rem;
+  color: var(--white-theme);
+  border-radius: 2rem;
+}
+
+.sort-btn {
+  padding: 0.8rem 3.2rem;
+  background-color: var(--button-theme-lightgreen);
+}
+
+.sort-btn:hover {
+  background-color: var(--button-hover-theme-lightgreen);
+}
+
+.new-book-btn {
+  padding: 0.8rem 2.4rem;
+  background-color: var(--button-theme-red);
+}
+
+.new-book-btn:hover {
+  background-color: var(--button-hover-theme-red);
 }
 
 .main {
@@ -350,15 +315,15 @@ dialog button {
   background-color: var(--sub-theme);
 }
 
-.main h3 {
-  color: var(--white-theme);
+.section-title {
   margin: 0 2rem 2.4rem 0;
   font-size: 2.6rem;
+  color: var(--white-theme);
 }
 
 .projects {
-  background-color: var(--sub-theme);
   grid-row: 1 / 3;
+  background-color: var(--sub-theme);
 }
 
 .bookshelf {
@@ -369,71 +334,55 @@ dialog button {
   color: var(--white-theme);
 }
 
-.projects li {
+.book {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
   width: 44rem;
-  height: 20rem;
-  padding: 2rem 1.6rem 2rem 2.4rem;
+  padding: 2.4rem 1.6rem 2rem 2rem;
   background-color: var(--white-theme);
   border-radius: 0.8rem;
-  box-shadow: 0.8rem 0.8rem 0.8rem 0 var(--shadow-theme);
+  box-shadow: 0.8rem 0.8rem 0.8rem var(--shadow-theme);
 }
 
-.not-read-notice {
-  background-image: linear-gradient(90deg, var(--accent-theme) 0.8rem, var(--white-theme) 0);
+.book:hover {
+  background-color: var(--item-theme);
 }
 
-.projects li:last-child {
-  margin-bottom: 2.8rem;
-}
-
-.projects h4 {
-  width: 100%;
+.book-title,
+.projects p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.book-title {
   margin-bottom: 1.6rem;
   font-size: 2.2rem;
   color: var(--main-theme);
 }
 
-.projects h4:hover {
-  color: var(--button-hover-theme-red);
-  cursor: pointer;
-}
-
 .projects p {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0.6rem;
   font-size: 1.8rem;
-  color: var(--paragraph-theme);
   font-family: Roboto, Arial, Helvetica, sans-serif;
+  color: var(--paragraph-theme);
 }
 
 .projects .btn-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 2.8rem;
+  margin-top: 1.6rem;
 }
 
-.rating-btn {
+.rating {
   font-size: 2.2rem;
+  color: var(--rating-star-theme);
   background-color: var(--transparent-theme);
-  color: var(--button-hover-theme-red);
   border: none;
 }
 
 .not-read-yet {
-  color: var(--button-hover-theme-green);
-}
-
-.rating-btn:hover {
-  color: var(--button-hover-theme-green);
-}
-
-.not-read-yet:hover {
-  color: var(--button-hover-theme-red);
+  color: var(--not-rating-theme);
 }
 
 .cross-btn {
@@ -443,94 +392,262 @@ dialog button {
   border: none;
 }
 
-.recommendations ul {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
+.cross-btn:hover {
+  color: var(--button-hover-theme-green);
+}
+
+.recommendations ul,
+.other-bookshelves ul {
+  display: flex;
+  flex-direction: column;
   width: 30rem;
-  height: 30rem;
-  border-radius: 0.8rem;
   background-color: var(--item-theme);
-  box-shadow: 0.8rem 0.8rem 0.8rem 0 var(--shadow-theme);
+  border-radius: 0.8rem;
+  box-shadow: 0.8rem 0.8rem 0.8rem var(--shadow-theme);
 }
 
 .recommendations li {
   padding: 1.2rem 2rem 0.8rem;
   border-bottom: 0.1rem solid var(--white-theme);
-  cursor: pointer;
 }
 
-.recommendations li:hover {
+.recommendations li:hover,
+.other-bookshelves li:hover {
   background-color: var(--white-theme);
 }
 
-.recommendations li:first-child {
+.recommendations li:first-child,
+.other-bookshelves li:first-child {
   border-radius: 0.8rem 0.8rem 0 0;
+}
+
+.recommendations li:last-child,
+.other-bookshelves li:last-child {
+  border-radius: 0 0 0.8rem 0.8rem;
 }
 
 .recommendations li:last-child {
   border-bottom: none;
-  border-radius: 0 0 0.8rem 0.8rem;
 }
 
-.recommendations h5 {
+.recommended-title {
+  margin-bottom: 1.2rem;
   font-size: 1.8rem;
   color: var(--main-theme);
-  margin-bottom: 1.2rem;
 }
 
-.recommendations p {
-  font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-size: 1.6rem;
+.recommended-author,
+.recommended-pages {
   margin: 0.4rem 0;
-  color: var(--paragraph-theme);
-}
-
-.others ul {
-  display: grid;
-  grid-template-rows: repeat(4, 7.5rem);
-  width: 30rem;
-  height: 30rem;
-  background-color: var(--item-theme);
-  border-radius: 0.8rem;
-  box-shadow: 0.8rem 0.8rem 0.8rem 0 var(--shadow-theme);
-}
-
-.others li {
-  display: grid;
-  grid-template-columns: 5rem 1fr;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.25rem 2.4rem 1.25rem;
-  cursor: pointer;
-}
-
-.others li:hover {
-  background-color: var(--white-theme);
-}
-
-.others li:first-child {
-  border-radius: 0.8rem 0.8rem 0 0;
-}
-
-.others li:last-child {
-  border-radius: 0 0 0.8rem 0.8rem;
-}
-
-.others img {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.others h6 {
+  font-size: 1.6rem;
   font-family: Roboto, Arial, Helvetica, sans-serif;
-  font-size: 1.6rem;
-  color: var(--main-theme);
-  margin-bottom: 0.2rem;
+  color: var(--paragraph-theme);
 }
 
-.others p {
+.other-bookshelves li {
+  display: flex;
+  gap: 1.2rem;
+  padding: 1.2rem 2.4rem;
+}
+
+.other-bookshelves img {
+  width: 4.8rem;
+  height: 4.8rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-account,
+.user-name {
   font-size: 1.6rem;
+}
+
+.user-account {
+  margin-bottom: 0.2rem;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  color: var(--main-theme);
+}
+
+.user-name {
   color: var(--paragraph-theme);
+}
+
+@media screen and (orientation: portrait) and (max-width: 47.99rem) {
+  dialog {
+    padding: 3.2rem 0 2rem;
+  }
+
+  .dialog-add,
+  .dialog-edit {
+    margin: 2rem auto;
+  }
+
+  dialog label {
+    font-size: 2rem;
+  }
+
+  dialog input,
+  dialog select,
+  dialog option {
+    width: 36rem;
+    font-size: 1.8rem;
+  }
+
+  dialog button {
+    width: 16rem;
+  }
+
+  .sort-option-btn,
+  .wide-btn {
+    width: 36rem;
+  }
+
+  .header {
+    gap: 2.8rem;
+    padding: 3.2rem 2.4rem;
+  }
+
+  .row-left,
+  .row-right {
+    gap: 0.8rem;
+  }
+
+  .first-header-row label,
+  .bell-icon {
+    display: none;
+  }
+
+  .search-bar {
+    width: 32rem;
+  }
+
+  .header svg {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .main-title {
+    font-size: 3rem;
+  }
+
+  .main,
+  .projects {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .main {
+    gap: 4rem;
+    padding: 2.4rem 0 8rem;
+  }
+
+  .projects {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .section-title {
+    text-align: center;
+    margin: 2rem 0 3.6rem;
+  }
+
+  .bookshelf,
+  .recommendations,
+  .other-bookshelves {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bookshelf {
+    gap: 3.2rem;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-width: 20rem) {
+  html {
+    font-size: 6px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 20.01rem) and (max-width: 47.99rem) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 24.01rem) and (max-width: 47.99rem) and (min-height: calc(50rem - 80px)) {
+  html {
+    font-size: 7.5px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 24.01rem) and (max-width: 47.99rem) and (min-height: calc(54rem - 80px)) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 48rem) {
+  html {
+    font-size: 8.5px;
+  }
+
+  .bookshelf {
+    padding-bottom: 8rem;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 48rem) and (min-height: calc(70rem - 80px)) {
+  html {
+    font-size: 9px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 56rem) {
+  html {
+    font-size: 10px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 64rem) {
+  html {
+    font-size: 11px;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .bookshelf {
+    padding-bottom: 8rem;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 41rem) {
+  html {
+    font-size: 6px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 41.01rem) and (max-width: 47rem) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 47.01rem) and (max-width: 53rem) {
+  html {
+    font-size: 8.5px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 53.01rem) and (max-width: 59rem) {
+  html {
+    font-size: 9px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 59.01rem) {
+  html {
+    font-size: 10px;
+  }
 }
