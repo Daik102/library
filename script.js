@@ -89,6 +89,9 @@ function addNewBook(e) {
   } else if (inputPages.validity.rangeUnderflow) {
     inputPages.reportValidity();
     return;
+  } else if (inputPages.validity.rangeOverflow) {
+    inputPages.reportValidity();
+    return;
   }
 
   const title = inputTitle.value;
@@ -164,6 +167,9 @@ function editBook(e) {
   } else if (editPages.validity.rangeUnderflow) {
     editPages.reportValidity();
     return;
+  } else if (editPages.validity.rangeOverflow) {
+    editPages.reportValidity();
+    return;
   }
   
   for (let i = 0; i < myLibrary.length; i++) {
@@ -215,7 +221,7 @@ function showRecommendationModal(e) {
   
   let target = e.target;
   
-  if (!e.target.classList.contains('recommended-book')) {
+  if (!target.classList.contains('recommended-book')) {
     target = e.target.parentNode;
   }
   
@@ -302,19 +308,19 @@ function createBooks(book) {
   crossBtn.classList.add('cross-btn');
   crossBtn.innerHTML = '&#10005;';
 
+  btnContainer.appendChild(rating);
+  btnContainer.appendChild(crossBtn);
   item.appendChild(title);
   item.appendChild(author);
   item.appendChild(pages);
-  btnContainer.appendChild(rating);
-  btnContainer.appendChild(crossBtn);
   item.appendChild(btnContainer);
   bookshelf.appendChild(item);
   
   const books = document.querySelectorAll('.book');
 
-  books.forEach((oneBook) => {
-    oneBook.addEventListener('click', (e) =>showEditModal(e, book));
-    oneBook.addEventListener('keydown', (e) => showEditModal(e, book));
+  books.forEach((currentBook) => {
+    currentBook.addEventListener('click', (e) =>showEditModal(e, book));
+    currentBook.addEventListener('keydown', (e) => showEditModal(e, book));
   });
 
   crossBtn.addEventListener('click', showDeleteModal);
