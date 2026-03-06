@@ -49,6 +49,7 @@ ul {
   list-style-type: none;
 }
 
+dialog,
 button {
   border: none;
 }
@@ -78,8 +79,11 @@ dialog {
   padding: 2.8rem 1.2rem 1.6rem;
   color: var(--main-theme);
   background-color: var(--item-theme);
-  border: none;
   border-radius: 0.8rem;
+}
+
+::backdrop {
+  background-color: var(--modal-theme);
 }
 
 .dialog-no-books form,
@@ -96,10 +100,6 @@ dialog {
   padding: 0.8rem 0;
 }
 
-::backdrop {
-  background-color: var(--modal-theme);
-}
-
 .title-of-dialog {
   text-align: center;
   margin-bottom: 2.8rem;
@@ -108,6 +108,10 @@ dialog {
 
 .dialog-sort .title-of-dialog {
   margin-bottom: 1.2rem;
+}
+
+.dialog-user-list .title-of-dialog {
+  font-size: 2.6rem;
 }
 
 dialog p {
@@ -142,7 +146,7 @@ dialog option {
 
 dialog button {
   width: 16rem;
-  padding: 0.8rem 0.4rem;
+  padding: 0.8rem 0;
   font-size: 1.8rem;
   color: var(--white-theme);
   border-radius: 2rem;
@@ -178,7 +182,6 @@ dialog button {
 }
 
 .sort-option-btn {
-  display: block;
   background-color: var(--button-theme-lightgreen);
 }
 
@@ -204,7 +207,6 @@ dialog button {
 .row-left,
 .row-right {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 }
 
@@ -247,7 +249,6 @@ dialog button {
   object-fit: cover;
   object-position: 65%;
   border-radius: 50%;
-  cursor: pointer;
 }
 
 .current-account,
@@ -377,8 +378,6 @@ dialog button {
 .rating {
   font-size: 2.2rem;
   color: var(--rating-star-theme);
-  background-color: var(--transparent-theme);
-  border: none;
 }
 
 .not-read-yet {
@@ -388,8 +387,8 @@ dialog button {
 .cross-btn {
   padding:0.2rem 0.6rem;
   font-size: 2.2rem;
+  color: var(--main-theme);
   background-color: var(--transparent-theme);
-  border: none;
 }
 
 .cross-btn:hover {
@@ -473,6 +472,10 @@ dialog button {
 }
 
 @media screen and (orientation: portrait) and (max-width: 47.99rem) {
+  html {
+    font-size: 6px;
+  }
+
   dialog {
     padding: 3.2rem 0 2rem;
   }
@@ -493,10 +496,6 @@ dialog button {
     font-size: 1.8rem;
   }
 
-  dialog button {
-    width: 16rem;
-  }
-
   .sort-option-btn,
   .wide-btn {
     width: 36rem;
@@ -507,9 +506,16 @@ dialog button {
     padding: 3.2rem 2.4rem;
   }
 
-  .row-left,
-  .row-right {
+  .row-left {
     gap: 0.8rem;
+  }
+
+  .sort-btn {
+    padding: 0.8rem 2.4rem;
+  }
+
+  .new-book-btn {
+    padding: 0.8rem 1.6rem;
   }
 
   .first-header-row label,
@@ -564,25 +570,19 @@ dialog button {
   }
 }
 
-@media screen and (orientation: portrait) and (max-width: 20rem) {
-  html {
-    font-size: 6px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 20.01rem) and (max-width: 47.99rem) {
+@media screen and (orientation: portrait) and (min-width: 20.01rem) {
   html {
     font-size: 7px;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 24.01rem) and (max-width: 47.99rem) and (min-height: calc(50rem - 80px)) {
+@media screen and (orientation: portrait) and (min-width: 24.01rem) and (min-height: calc(50rem - 80px)) {
   html {
     font-size: 7.5px;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 24.01rem) and (max-width: 47.99rem) and (min-height: calc(54rem - 80px)) {
+@media screen and (orientation: portrait) and (min-width: 24.01rem) and (min-height: calc(54rem - 80px)) {
   html {
     font-size: 8px;
   }
@@ -617,30 +617,28 @@ dialog button {
 }
 
 @media screen and (orientation: landscape) {
+  html {
+    font-size: 6px;
+  }
+
   .bookshelf {
     padding-bottom: 8rem;
   }
 }
 
-@media screen and (orientation: landscape) and (max-width: 41rem) {
-  html {
-    font-size: 6px;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 41.01rem) and (max-width: 47rem) {
+@media screen and (orientation: landscape) and (min-width: 41.01rem) {
   html {
     font-size: 7px;
   }
 }
 
-@media screen and (orientation: landscape) and (min-width: 47.01rem) and (max-width: 53rem) {
+@media screen and (orientation: landscape) and (min-width: 47.01rem) {
   html {
     font-size: 8.5px;
   }
 }
 
-@media screen and (orientation: landscape) and (min-width: 53.01rem) and (max-width: 59rem) {
+@media screen and (orientation: landscape) and (min-width: 53.01rem) {
   html {
     font-size: 9px;
   }
