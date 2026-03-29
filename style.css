@@ -29,7 +29,7 @@
   --button-hover-theme-green: #57a2a5;
   --button-hover-theme-lightgreen: #2de97e;
   --modal-theme: rgba(35, 64, 68, 0.65);
-  --shadow-theme: rgba(5, 5, 11, 0.2);
+  --shadow-theme: rgba(0, 0, 0, 0.2);
   --transparent-theme: #0000;
 }
 
@@ -41,31 +41,12 @@ body {
   background-color: var(--sub-theme);
 }
 
-a {
-  text-decoration: none;
-}
-
-ul {
-  list-style-type: none;
-}
-
-dialog,
-button {
-  border: none;
-}
-
 label,
 input,
 select,
 button,
 li {
   cursor: pointer;
-}
-
-input,
-select {
-  color: var(--main-theme);
-  background-color: var(--white-theme);
 }
 
 .container {
@@ -79,6 +60,7 @@ dialog {
   padding: 2.8rem 1.2rem 1.6rem;
   color: var(--main-theme);
   background-color: var(--item-theme);
+  border: none;
   border-radius: 0.8rem;
 }
 
@@ -138,6 +120,12 @@ dialog option {
   font-size: 2rem;
 }
 
+dialog input,
+dialog select {
+  color: var(--main-theme);
+  background-color: var(--white-theme);
+}
+
 .dialog-sort .btn-container {
   display: flex;
   flex-direction: column;
@@ -154,6 +142,7 @@ dialog button {
   padding: 1rem 0;
   font-size: 1.8rem;
   color: var(--white-theme);
+  border: none;
   border-radius: 2rem;
 }
 
@@ -235,7 +224,8 @@ dialog button {
   padding: 0.8rem 1.6rem;
   font-size: 1.8rem;
   letter-spacing: 0.05rem;
-  background-color: var(--item-theme);
+  color: var(--main-theme);
+  background-color: var(--white-theme);
   border: none;
   border-radius: 2rem;
 }
@@ -246,6 +236,14 @@ dialog button {
 
 .search-bar:focus {
   background-color: var(--white-theme);
+}
+
+.row-right a {
+  text-decoration: none;
+}
+
+.row-right a:hover {
+  opacity: 0.8;
 }
 
 .sub-photo {
@@ -271,18 +269,13 @@ dialog button {
   font-size: 2rem;
 }
 
-.current-account:hover,
-.current-username:hover {
-  opacity: 0.8;
-}
-
 .header svg {
   width: 3rem;
   height: 3rem;
   fill: var(--white-theme);
 }
 
-.main-title {
+.app-title {
   font-size: 3.2rem;
   color: var(--white-theme);
 }
@@ -291,6 +284,7 @@ dialog button {
 .new-book-btn {
   font-size: 1.8rem;
   color: var(--white-theme);
+  border: none;
   border-radius: 2rem;
 }
 
@@ -319,6 +313,10 @@ dialog button {
   gap: 2.4rem;
   padding: 2.4rem 0 0 4.8rem;
   background-color: var(--sub-theme);
+}
+
+.main ul {
+  list-style-type: none;
 }
 
 .section-title {
@@ -394,6 +392,7 @@ dialog button {
   font-size: 2.2rem;
   color: var(--main-theme);
   background-color: var(--transparent-theme);
+  border: none;
 }
 
 .cross-btn:hover {
@@ -405,19 +404,19 @@ dialog button {
   display: flex;
   flex-direction: column;
   width: 30rem;
-  background-color: var(--item-theme);
+  background-color: var(--white-theme);
   border-radius: 0.8rem;
   box-shadow: 0.8rem 0.8rem 0.8rem var(--shadow-theme);
 }
 
 .recommendations li {
   padding: 1.2rem 2rem 0.8rem;
-  border-bottom: 0.1rem solid var(--white-theme);
+  border-bottom: 0.1rem solid var(--item-theme);
 }
 
 .recommendations li:hover,
 .other-bookshelves li:hover {
-  background-color: var(--white-theme);
+  background-color: var(--item-theme);
 }
 
 .recommendations li:first-child,
@@ -475,10 +474,10 @@ dialog button {
 .user-name {
   color: var(--paragraph-theme);
 }
-
+/* For smartphones in portrait mode */
 @media screen and (orientation: portrait) and (max-width: 47.99rem) {
   html {
-    font-size: 6px;
+    font-size: 6.25px;
   }
 
   dialog {
@@ -529,7 +528,7 @@ dialog button {
   }
 
   .search-bar {
-    width: 32rem;
+    width: 30rem;
   }
 
   .header svg {
@@ -537,7 +536,7 @@ dialog button {
     height: 2.8rem;
   }
 
-  .main-title {
+  .app-title {
     font-size: 3rem;
   }
 
@@ -575,81 +574,107 @@ dialog button {
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 20.01rem) {
+@media screen and (orientation: portrait) and (min-width: 22.5em) {
   html {
-    font-size: 7px;
+    font-size: 7.25px;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 24.01rem) and (min-height: calc(50rem - 80px)) {
+@media screen and (orientation: portrait) and (min-width: 23.4em) {
   html {
     font-size: 7.5px;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 24.01rem) and (min-height: calc(54rem - 80px)) {
+@media screen and (orientation: portrait) and (min-width: 24.3em) {
+  html {
+    font-size: 7.75px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 25.75em) {
+  html {
+    font-size: 8.25px;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 26.75em) {
+  html {
+    font-size: 8.5px;
+  }
+}
+/* For small tablets in portrait mode */
+@media screen and (orientation: portrait) and (min-width: 48em) {
+  .bookshelf {
+    padding-bottom: 6rem;
+  }
+}
+/* For middle tablets in portrait mode */
+@media screen and (orientation: portrait) and (min-width: 50em) {
+  html {
+    font-size: 9px;
+  }
+}
+/* For large tablets in portrait mode */
+@media screen and (orientation: portrait) and (min-width: 57em) {
+  html {
+    font-size: 10px;
+  }
+}
+/* For smartphones in landscape mode */
+@media screen and (orientation: landscape) {
+  html {
+    font-size: 6.25px;
+  }
+
+  .bookshelf {
+    padding-bottom: 6rem;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 41.6em) {
+  html {
+    font-size: 7.25px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 46.25em) {
+  html {
+    font-size: 7.5px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 50em) {
+  html {
+    font-size: 7.75px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 52.7em) {
   html {
     font-size: 8px;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 48rem) {
+@media screen and (orientation: landscape) and (min-width: 55.75em) {
   html {
-    font-size: 8.5px;
-  }
-
-  .bookshelf {
-    padding-bottom: 8rem;
+    font-size: 8.25px;
   }
 }
-
-@media screen and (orientation: portrait) and (min-width: 48rem) and (min-height: calc(70rem - 80px)) {
-  html {
-    font-size: 9px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 56rem) {
-  html {
-    font-size: 10px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 64rem) {
-  html {
-    font-size: 11px;
-  }
-}
-
-@media screen and (orientation: landscape) {
-  html {
-    font-size: 6px;
-  }
-
-  .bookshelf {
-    padding-bottom: 8rem;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 41.01rem) {
-  html {
-    font-size: 7px;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 47.01rem) {
+/* For large smartphones and small tablets in landscape mode */
+@media screen and (orientation: landscape) and (min-width: 58em) {
   html {
     font-size: 8.5px;
   }
 }
-
-@media screen and (orientation: landscape) and (min-width: 53.01rem) {
+/* For middle tablets in landscape mode */
+@media screen and (orientation: landscape) and (min-width: 73.75rem) {
   html {
     font-size: 9px;
   }
 }
-
-@media screen and (orientation: landscape) and (min-width: 59.01rem) {
+/* For large tablets in landscape mode, laptops, and desktops */
+@media screen and (orientation: landscape) and (min-width: 84rem) {
   html {
     font-size: 10px;
   }
