@@ -12,7 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Play-Bold, Arial, Helvetica, sans-serif;
+  font-family: var(--main-font);
 }
 
 :root {
@@ -31,10 +31,12 @@
   --modal-theme: rgba(35, 64, 68, 0.65);
   --shadow-theme: rgba(0, 0, 0, 0.2);
   --transparent-theme: #0000;
+  --main-font: Play-Bold, Arial, Helvetica, sans-serif;
+  --description-font: Roboto, Arial, Helvetica, sans-serif;
 }
 
 html {
-  font-size: 10px;
+  font-size: 50%;
 }
 
 body {
@@ -50,22 +52,27 @@ li {
 }
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--sub-theme);
 }
 
 dialog {
   margin: auto;
-  width: 56rem;
-  padding: 2.8rem 1.2rem 1.6rem;
+  width: 100%;
+  max-width: 56rem;
+  padding: 3.2rem 0 2rem;
   color: var(--main-theme);
   background-color: var(--item-theme);
   border: none;
-  border-radius: 0.8rem;
 }
 
 ::backdrop {
   background-color: var(--modal-theme);
+}
+
+.dialog-add,
+.dialog-edit {
+  margin: 0 auto;
 }
 
 .dialog-no-books form,
@@ -84,52 +91,54 @@ dialog {
 
 .dialog-sort form {
   gap: 2.8rem;
-  padding: 0.8rem 0;
+  padding: 0.8rem;
 }
 
-.title-of-dialog {
+.dialog-title {
   text-align: center;
   margin-bottom: 2.8rem;
-  font-size: 2.8rem;
-}
-
-.dialog-sort .title-of-dialog {
-  margin-bottom: 0.8rem;
-}
-
-.dialog-user-list .title-of-dialog {
   font-size: 2.6rem;
+}
+
+.dialog-sort .dialog-title {
+  margin-bottom: 0.8rem;
 }
 
 dialog p {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.6rem;
-  padding: 0 2rem;
+  padding: 0 0.8rem;
 }
 
 dialog label {
-  font-size: 2.2rem;
+  width: 10rem;
+  font-size: 2rem;
 }
 
 dialog input,
 dialog select,
 dialog option {
-  width: 40rem;
-  padding: 0.4rem 1.2rem;
-  font-size: 2rem;
+  width: 100%;
+  max-width: 40rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.8rem;
 }
 
 dialog input,
 dialog select {
   color: var(--main-theme);
   background-color: var(--white-theme);
+  border: none;
+  border-radius: 0.4rem;
 }
 
 .dialog-sort .btn-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2.4rem;
+  width: 100%;
 }
 
 .dialog-add .btn-container,
@@ -172,7 +181,8 @@ dialog button {
 
 .sort-option-btn,
 .wide-btn {
-  width: 44rem;
+  width: 100%;
+  max-width: 44rem;
 }
 
 .sort-option-btn {
@@ -186,8 +196,8 @@ dialog button {
 .header {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2.8rem 4rem;
+  gap: 2.8rem;
+  padding: 3.2rem 0.8rem;
   background-color: var(--main-theme);
   border-bottom: 0.4rem dashed var(--white-theme);
 }
@@ -198,6 +208,10 @@ dialog button {
   justify-content: space-between;
 }
 
+.first-header-row {
+   gap: 2rem;
+}
+
 .row-left,
 .row-right {
   display: flex;
@@ -205,22 +219,30 @@ dialog button {
 }
 
 .row-left {
-  gap: 1.2rem;
+  gap: 0.8rem;
+  width: 100%;
 }
 
 .row-right {
-  gap: 1.6rem;
+  gap: 1.2rem;
+}
+
+.first-header-row label,
+.bell-icon,
+.header svg {
+  display: none;
 }
 
 .icons {
   width: 2.6rem;
-  height: 2.6rem;
+  aspect-ratio: 1;
   filter: invert(99%) sepia(57%) saturate(3148%) hue-rotate(180deg) brightness(107%) contrast(106%);
   cursor: pointer;
 }
 
 .search-bar {
-  width: 40rem;
+  width: 100%;
+  max-width: 44rem;
   padding: 0.8rem 1.6rem;
   font-size: 1.8rem;
   letter-spacing: 0.05rem;
@@ -231,7 +253,7 @@ dialog button {
 }
 
 .search-bar::placeholder {
-  font-family: Roboto;
+  font-family: var(--description-font);
 }
 
 .search-bar:focus {
@@ -248,7 +270,7 @@ dialog button {
 
 .sub-photo {
   width: 4.4rem;
-  height: 4.4rem;
+  aspect-ratio: 1;
   object-fit: cover;
   object-position: 65%;
   border-radius: 50%;
@@ -262,7 +284,7 @@ dialog button {
 .current-account {
   font-weight: 600;
   font-size: 1.6rem;
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: var(--description-font);
 }
 
 .current-username {
@@ -270,13 +292,13 @@ dialog button {
 }
 
 .header svg {
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  aspect-ratio: 1;
   fill: var(--white-theme);
 }
 
 .app-title {
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   color: var(--white-theme);
 }
 
@@ -289,7 +311,7 @@ dialog button {
 }
 
 .sort-btn {
-  padding: 1rem 3rem;
+  padding: 0.8rem 2rem;
   background-color: var(--button-theme-lightgreen);
 }
 
@@ -298,7 +320,8 @@ dialog button {
 }
 
 .new-book-btn {
-  padding: 1rem 2rem;
+  width: 12.6rem;
+  padding: 0.8rem 1.2rem;
   background-color: var(--button-theme-red);
 }
 
@@ -307,11 +330,10 @@ dialog button {
 }
 
 .main {
-  display: grid;
-  grid-template-columns: 1fr 34rem;
-  grid-template-rows: 36rem 36rem;
-  gap: 2.4rem;
-  padding: 2.4rem 0 0 4.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 2.4rem 0 6rem;
   background-color: var(--sub-theme);
 }
 
@@ -320,20 +342,31 @@ dialog button {
 }
 
 .section-title {
-  margin: 0 2rem 2.4rem 0;
+  margin: 2rem 0 3.6rem;
+  text-align: center;
   font-size: 2.6rem;
   color: var(--white-theme);
 }
 
 .projects {
-  grid-row: 1 / 3;
   background-color: var(--sub-theme);
 }
 
+.projects .section-title {
+  font-size: 2.8rem;
+}
+
+.bookshelf,
+.recommendations,
+.other-bookshelves {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .bookshelf {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(46rem, 1fr));
-  gap: 4rem 2rem;
+  gap: 3.2rem;
+  padding: 0 1.2rem;
   font-size: 2.4rem;
   color: var(--white-theme);
 }
@@ -342,7 +375,8 @@ dialog button {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  width: 44rem;
+  width: 100%;
+  max-width: 44rem;
   padding: 2.4rem 1.6rem 2rem 2rem;
   background-color: var(--white-theme);
   border-radius: 0.8rem;
@@ -368,7 +402,7 @@ dialog button {
 
 .projects p {
   font-size: 1.8rem;
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: var(--description-font);
   color: var(--paragraph-theme);
 }
 
@@ -403,7 +437,8 @@ dialog button {
 .other-bookshelves ul {
   display: flex;
   flex-direction: column;
-  width: 30rem;
+  width: 100%;
+  max-width: 30rem;
   background-color: var(--white-theme);
   border-radius: 0.8rem;
   box-shadow: 0.8rem 0.8rem 0.8rem var(--shadow-theme);
@@ -443,7 +478,7 @@ dialog button {
 .recommended-pages {
   margin: 0.4rem 0;
   font-size: 1.6rem;
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: var(--description-font);
   color: var(--paragraph-theme);
 }
 
@@ -455,7 +490,7 @@ dialog button {
 
 .other-bookshelves img {
   width: 4.8rem;
-  height: 4.8rem;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -467,215 +502,110 @@ dialog button {
 
 .user-account {
   margin-bottom: 0.2rem;
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: var(--description-font);
   color: var(--main-theme);
 }
 
 .user-name {
   color: var(--paragraph-theme);
 }
-/* For smartphones in portrait mode */
-@media screen and (orientation: portrait) and (max-width: 47.99rem) {
+
+/* Middle and Large Smartphones */
+@media screen and (min-width: 24.25em) {
   html {
-    font-size: 6.25px;
-  }
-
-  dialog {
-    padding: 3.2rem 0 2rem;
-  }
-
-  .dialog-add,
-  .dialog-edit {
-    margin: 2rem auto;
-  }
-
-  dialog label {
-    font-size: 2rem;
-  }
-
-  dialog input,
-  dialog select,
-  dialog option {
-    width: 36rem;
-    font-size: 1.8rem;
-  }
-
-  .sort-option-btn,
-  .wide-btn {
-    width: 36rem;
+    font-size: 56.25%;
   }
 
   .header {
-    gap: 2.8rem;
-    padding: 3.2rem 2.4rem;
-  }
-
-  .row-left {
-    gap: 0.8rem;
+    padding: 3.2rem 1.2rem;
   }
 
   .sort-btn {
     padding: 0.8rem 2.4rem;
   }
+}
 
-  .new-book-btn {
-    padding: 0.8rem 1.6rem;
+/* Tablets and Desktops */
+@media screen and (min-width: 48em) {
+  html {
+    font-size: 62.5%;
+  }
+
+  dialog {
+    padding: 2.8rem 1.2rem 1.6rem;
+    border-radius: 0.8rem;
+  }
+
+  .dialog-add,
+  .dialog-edit {
+    margin: auto;
+  }
+
+  dialog label {
+    font-size: 2.2rem;
+  }
+
+  dialog input,
+  dialog select,
+  dialog option {
+    font-size: 2rem;
+  }
+
+  .header {
+    gap: 2rem;
+    padding: 2.4rem;
+  }
+
+  .row-left {
+    gap: 1.2rem;
+  }
+
+  .row-right {
+    gap: 1.6rem;
   }
 
   .first-header-row label,
-  .bell-icon {
-    display: none;
-  }
-
-  .search-bar {
-    width: 30rem;
-  }
-
+  .bell-icon,
   .header svg {
-    width: 2.8rem;
-    height: 2.8rem;
+    display: block;
   }
 
   .app-title {
-    font-size: 3rem;
+    font-size: 3.2rem;
   }
 
-  .main,
-  .projects {
-    display: flex;
-    flex-direction: column;
+  .sort-btn {
+    padding: 1rem 3rem;
   }
-  
+
+  .new-book-btn {
+    padding: 1rem 2rem;
+  }
+
   .main {
-    gap: 4rem;
-    padding: 2.4rem 0 8rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 36rem 36rem;
+    padding: 2.4rem;
   }
 
   .projects {
-    justify-content: center;
-    align-items: center;
+    display: block;
   }
 
   .section-title {
-    text-align: center;
-    margin: 2rem 0 3.6rem;
+    margin: 0 0.8rem 2.4rem 0;
   }
 
-  .bookshelf,
-  .recommendations,
+  .bookshelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, auto));
+    justify-content: center;
+    gap: 3.6rem 3.2rem;
+    padding-bottom: 6rem;
+  }
+
   .other-bookshelves {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .bookshelf {
-    gap: 3.2rem;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 22.5em) {
-  html {
-    font-size: 7.25px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 23.4em) {
-  html {
-    font-size: 7.5px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 24.3em) {
-  html {
-    font-size: 7.75px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 25.75em) {
-  html {
-    font-size: 8.25px;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 26.75em) {
-  html {
-    font-size: 8.5px;
-  }
-}
-/* For small tablets in portrait mode */
-@media screen and (orientation: portrait) and (min-width: 48em) {
-  .bookshelf {
-    padding-bottom: 6rem;
-  }
-}
-/* For middle tablets in portrait mode */
-@media screen and (orientation: portrait) and (min-width: 50em) {
-  html {
-    font-size: 9px;
-  }
-}
-/* For large tablets in portrait mode */
-@media screen and (orientation: portrait) and (min-width: 57em) {
-  html {
-    font-size: 10px;
-  }
-}
-/* For smartphones in landscape mode */
-@media screen and (orientation: landscape) {
-  html {
-    font-size: 6.25px;
-  }
-
-  .bookshelf {
-    padding-bottom: 6rem;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 41.6em) {
-  html {
-    font-size: 7.25px;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 46.25em) {
-  html {
-    font-size: 7.5px;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 50em) {
-  html {
-    font-size: 7.75px;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 52.7em) {
-  html {
-    font-size: 8px;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 55.75em) {
-  html {
-    font-size: 8.25px;
-  }
-}
-/* For large smartphones and small tablets in landscape mode */
-@media screen and (orientation: landscape) and (min-width: 58em) {
-  html {
-    font-size: 8.5px;
-  }
-}
-/* For middle tablets in landscape mode */
-@media screen and (orientation: landscape) and (min-width: 73.75rem) {
-  html {
-    font-size: 9px;
-  }
-}
-/* For large tablets in landscape mode, laptops, and desktops */
-@media screen and (orientation: landscape) and (min-width: 84rem) {
-  html {
-    font-size: 10px;
+    grid-column: 2;
   }
 }

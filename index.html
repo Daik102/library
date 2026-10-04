@@ -11,13 +11,13 @@
 <body>
   <dialog class="dialog-no-books">
     <form>
-      <h3 class="title-of-dialog">Sorry, no books were found</h3>
+      <h3 class="dialog-title">No books found</h3>
       <button type="button" class="cancel-btn">Back</button>
     </form>
   </dialog>
   <dialog class="dialog-sort">
     <form>
-      <h3 class="title-of-dialog">Select the sort option</h3>
+      <h3 class="dialog-title">Sort by</h3>
       <p class="btn-container">
         <button type="button" class="sort-option-btn oldest-btn">Oldest (default)</button>
         <button type="button" class="sort-option-btn newest-btn">Newest</button>
@@ -29,21 +29,21 @@
   </dialog>
   <dialog class="dialog-add">
     <form>
-      <h3 class="title-of-dialog">Enter the book information</h3>
+      <h3 class="dialog-title">Add a new book</h3>
       <p>
-        <label for="title">Title: </label>
+        <label for="title">Title:</label>
         <input type="text" id="title" required>
       </p>
       <p>
-        <label for="author">Author: </label>
+        <label for="author">Author:</label>
         <input type="text" id="author" required>
       </p>
       <p>
-        <label for="pages">Pages: </label>
+        <label for="pages">Pages:</label>
         <input type="number" min="1" max="9999" id="pages" required>
       </p>
       <p>
-        <label for="rating">Rating: </label>
+        <label for="rating">Rating:</label>
         <select name="rating" id="rating">
           <option value="0">Not read yet</option>
           <option value="5">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
@@ -61,21 +61,21 @@
   </dialog>
   <dialog class="dialog-edit">
     <form>
-      <h3 class="title-of-dialog">Edit the book information</h3>
+      <h3 class="dialog-title">Edit book</h3>
       <p>
-        <label for="edit-title">Title: </label>
+        <label for="edit-title">Title:</label>
         <input type="text" id="edit-title" required>
       </p>
       <p>
-        <label for="edit-author">Author: </label>
+        <label for="edit-author">Author:</label>
         <input type="text" id="edit-author" required>
       </p>
       <p>
-        <label for="edit-pages">Pages: </label>
+        <label for="edit-pages">Pages:</label>
         <input type="number" min="1" max="9999" id="edit-pages" required>
       </p>
       <p>
-        <label for="edit-rating">Rating: </label>
+        <label for="edit-rating">Rating:</label>
         <select name="edit-rating" id="edit-rating">
           <option value="0">Not read yet</option>
           <option value="5">&#9734;&#9734;&#9734;&#9734;&#9734;</option>
@@ -93,7 +93,7 @@
   </dialog>
   <dialog class="dialog-delete">
     <form>
-      <h3 class="title-of-dialog">Are you sure to delete this book?</h3>
+      <h3 class="dialog-title">Delete this book?</h3>
       <p class="btn-container">
         <button type="button" class="cancel-btn">Cancel</button>
         <button type="button" class="delete-btn">Delete</button>
@@ -102,7 +102,7 @@
   </dialog>
   <dialog class="dialog-recommendation">
     <form>
-      <h3 class="title-of-dialog">Are you sure to add this book?</h3>
+      <h3 class="dialog-title">Add this book?</h3>
       <p class="btn-container">
         <button type="button" class="cancel-btn">Cancel</button>
         <button type="button" class="add-btn-for-recommendation">Add</button>
@@ -111,7 +111,7 @@
   </dialog>
   <dialog class="dialog-user-list">
     <form>
-      <h3 class="title-of-dialog">Sorry, this section is under construction.</h3>
+      <h3 class="dialog-title">Under construction</h3>
       <button type="button" class="cancel-btn">Back</button>
     </form>
   </dialog>
@@ -119,13 +119,24 @@
     <header class="header">
       <div class="first-header-row">
         <div class="row-left">
-          <label for="search-bar"><img class="icons" src="./icons/magnify.svg" alt=""></label>
+          <label for="search-bar">
+            <img class="icons" src="./icons/magnify.svg" alt="">
+          </label>
           <input id="search-bar" class="search-bar" type="text" placeholder="Search titles or authors">
         </div>
         <div class="row-right">
           <img class="icons bell-icon" src="./icons/bell-ring-outline.svg" alt="" title="No notifications">
-          <div><a href="https://daik102.github.io/homepage/" target="_blank"><img class="sub-photo" src="./photos/orca.jpg" alt="orca"></a></div>
-          <div><a href="https://daik102.github.io/homepage/" target="_blank"><div class="current-account">@hikebed</div><div class="current-username">Daik</div></a></div>
+          <div>
+            <a href="https://daik102.github.io/homepage/" target="_blank">
+              <img class="sub-photo" src="./photos/orca.jpg" alt="orca">
+            </a>
+          </div>
+          <div>
+            <a href="https://daik102.github.io/homepage/" target="_blank">
+              <div class="current-account">@hikebed</div>
+              <div class="current-username">Daik</div>
+            </a>
+          </div>
         </div>
       </div>
       <div class="second-header-row">
