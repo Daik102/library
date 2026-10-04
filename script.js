@@ -77,20 +77,11 @@ function sortBooks(e) {
 }
 
 function addNewBook(e) {
-  if (inputTitle.validity.valueMissing) {
-    inputTitle.reportValidity();
-    return;
-  } else if (inputAuthor.validity.valueMissing) {
-    inputAuthor.reportValidity();
-    return;
-  } else if (inputPages.validity.valueMissing) {
-    inputPages.reportValidity();
-    return;
-  } else if (inputPages.validity.rangeUnderflow) {
-    inputPages.reportValidity();
-    return;
-  } else if (inputPages.validity.rangeOverflow) {
-    inputPages.reportValidity();
+  // Validates in order and reports the first error found
+  const invalidInput = [inputTitle, inputAuthor, inputPages].find(input => !input.checkValidity());
+
+  if (invalidInput) {
+    invalidInput.reportValidity();
     return;
   }
 
@@ -155,34 +146,22 @@ function showEditModal(e, book) {
 }
 
 function editBook(e) {
-  if (editTitle.validity.valueMissing) {
-    editTitle.reportValidity();
-    return;
-  } else if (editAuthor.validity.valueMissing) {
-    editAuthor.reportValidity();
-    return;
-  } else if (editPages.validity.valueMissing) {
-    editPages.reportValidity();
-    return;
-  } else if (editPages.validity.rangeUnderflow) {
-    editPages.reportValidity();
-    return;
-  } else if (editPages.validity.rangeOverflow) {
-    editPages.reportValidity();
+  // Validates in order and reports the first error found
+  const invalidEdit = [editTitle, editAuthor, editPages].find(edit => !edit.checkValidity());
+
+  if (invalidEdit) {
+    invalidEdit.reportValidity();
     return;
   }
-  
-  for (let i = 0; i < myLibrary.length; i++) {
-    const book = myLibrary[i];
 
-    if (book.id === itemId) {
-      book.title = editTitle.value;
-      book.author = editAuthor.value;
-      book.pages = editPages.value;
-      book.rating = editRating.value;
-      renderLibrary(e);
-      return;
-    }
+  const bookForEdit = myLibrary.find(book => book.id === itemId);
+
+  if (bookForEdit) {
+    bookForEdit.title = editTitle.value;
+    bookForEdit.author = editAuthor.value;
+    bookForEdit.pages = editPages.value;
+    bookForEdit.rating = editRating.value;
+    renderLibrary(e);
   }
 };
 
@@ -199,14 +178,11 @@ function showDeleteModal(e) {
 }
 
 function deleteBook(e) {
-  for (let i = 0; i < myLibrary.length; i++) {
-    const book = myLibrary[i];
-
-    if (book.id === itemId) {
-      myLibrary.splice(i, 1);
-      renderLibrary(e);
-      return;
-    }
+  const indexForDelete = myLibrary.findIndex(book => book.id === itemId);
+  
+  if (indexForDelete !== -1) {
+    myLibrary.splice(indexForDelete, 1);
+    renderLibrary(e);
   }
 }
 
@@ -396,7 +372,8 @@ recommendationList.addEventListener('keydown', showRecommendationModal);
 addBtnForRecommendation.addEventListener('click', addRecommendedBook);
 userList.addEventListener('click', showUserListModal);
 userList.addEventListener('keydown', showUserListModal);
-// Some default items.
+
+// Default items
 if (myLibrary.length === 0) {
   const androids = new Book('Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '210', '5');
   const client = new Book('The Client', 'John Grisham', '422', '4');
@@ -406,5 +383,6 @@ if (myLibrary.length === 0) {
   const alice = new Book('Alice\'s Adventures in Wonderland', 'Lewis Carroll', '172', '0');
   addBookToLibrary(androids, client, nineteen, charlie, dragon, alice);
 }
-// Initial rendering.
+
+// Initial rendering
 renderLibrary();
